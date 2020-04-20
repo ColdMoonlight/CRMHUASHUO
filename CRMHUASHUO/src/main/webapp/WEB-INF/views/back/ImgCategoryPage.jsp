@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>图片列表</title>
 
-  <!-- Bootstrap -->
+ <%--  <!-- Bootstrap -->
   <link href="${APP_PATH }/static/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
   <link href="${APP_PATH }/static/css/font-awesome.min.css" rel="stylesheet">
@@ -17,8 +17,9 @@
   <link href="${APP_PATH }/static/css/nprogress.css" rel="stylesheet">
   <!-- Toastr -->
   <link href="${APP_PATH }/static/css/toastr.min.css" rel="stylesheet">
-  <!-- PhotoSwipe Style -->
-  <link href="${APP_PATH }/static/css/magnific-popup.css" rel="stylesheet">
+  <!-- Select2 Style -->
+  <link href="${APP_PATH }/static/css/select2.min.css" rel="stylesheet"> --%>
+  <link href="${APP_PATH }/static/css/lib.min.css" rel="stylesheet">
   <!-- Custom Theme Style -->
   <link href="${APP_PATH }/static/css/custom.css" rel="stylesheet">
 </head>
@@ -36,7 +37,7 @@
                 <li>
                   <a><i class="glyphicon glyphicon-picture"></i> 图片管理 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="${APP_PATH }/index/tobackIndexPage">图片分类</a></li>
+                    <li><a href="${APP_PATH }/Index/tobackIndexPage">图片分类</a></li>
                     <li><a href="${APP_PATH }/ImgCategory/toImgCategoryPage">图片列表</a></li>
                   </ul>
                 </li>
@@ -66,19 +67,19 @@
               <button id="btn-add" class="btn btn-primary" type="button" data-toggle="modal"
                 data-target="#add-modal">添加图片</button>
             </div>
-            
+
             <div class="title_right col-md-4 col-sm-4">
-               <select class="form-control col-sm-10 select-category" name="imgDetailCategoryId" id="selectCategory2">
-                  <option value="-1">--none--</option>
-                </select>
+              <select class="form-control col-sm-10 select-category" name="imgDetailCategoryId" id="selectCategory2">
+                <option value="-1">--none--</option>
+              </select>
             </div>
           </div>
 
           <div class="row">
             <div class="col-md-12 col-sm-12">
-             <div class="gallery-box">
-             	<div id="js-gallery"></div>
-             </div>
+              <div class="gallery-box">
+                <div id="js-gallery"></div>
+              </div>
 
               <div id="table-pagination"></div>
             </div>
@@ -101,17 +102,23 @@
               <form id="formData">
                 <div class="form-group row">
                   <label class="col-sm-2" for="imgDetailCategoryId">归属分类</label>
-                  <select class="form-control col-sm-10 select-category" name="imgDetailCategoryId" id="selectCategory"></select>
+                  <select class="form-control col-sm-10 select-category" style="width: 300px;" name="imgDetailCategoryId"
+                    id="selectCategory"></select>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2" for="imgDetailUrl">上传图片</label>
-                  <div class="col-sm-10" style="margin-left: -10px;">
-                    <div class="input-file-list"></div>
+                  <div class="col-sm-10">
                     <div class="input-file">
                       <div class="input-file-plus col-ofset-2"></div>
                       <input type="file" class="form-control" name="imgDetailUrl" id="imgDetailUrl" placeholder="请上传图片"
                         required></input>
+                      <div class="upload-progress">
+                        <div class="load-img spinner-border" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </div>
                     </div>
+                    <div class="input-file-list"></div>
                   </div>
                 </div>
               </form>
@@ -128,68 +135,80 @@
 
   <!-- jQuery -->
   <script src="${APP_PATH }/static/js/jquery.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="${APP_PATH }/static/js/bootstrap.bundle.min.js"></script>
+  <%-- <!-- Bootstrap -->
+  <script src="${APP_PATH }/static/js/bootstrap.min.js"></script>
   <!-- NProgress -->
   <script src="${APP_PATH }/static/js/nprogress.js"></script>
   <!-- Toastr -->
   <script src="${APP_PATH }/static/js/toastr.min.js"></script>
   <!-- PhotoScript Scripts -->
   <script src="${APP_PATH }/static/js/jquery.magnific-popup.min.js"></script>
+  <!-- Select2 Scripts -->
+  <script src="${APP_PATH }/static/js/select2.min.js"></script> --%>
+  <script src="${APP_PATH }/static/js/jquery.lib.min.js"></script>
   <!-- Custom Theme Scripts -->
   <script src="${APP_PATH }/static/js/custom.js"></script>
   <script>
-  function renderPhotoList(parent, data) {
-		var htmlStr = '',
-			len = data.length;
+    function renderPhotoList(parent, data) {
+      var htmlStr = '',
+        len = data.length;
 
-		parent.html('');
-		if (len > 0) {
-			for (var i = 0; i < len; i++) {
-				htmlStr += '<a class="slide" href="'+ data[i].imgDetailUrl +'" data-url="'+ data[i].imgDetailUrl +'" data-id="'+ data[i].imgDetailId +'">'+
-					'<img src="'+ data[i].imgDetailUrl +'" data-original-src-width="2000" data-original-src-height="2000" />'+
-					'<div class="picture-delete"><span aria-hidden="true">x</span></div>' +
-				'</a>';
-			}
-			parent.html(htmlStr);
-			// lightbox
-		    parent.find('.slide').magnificPopup({
-				type: 'image',
-				closeOnContentClick: true,
-				closeBtnInside: false,
-				fixedContentPos: true,
-		        mainClass: 'mfp-no-margins mfp-with-zoom',
-		        gallery: {
-		            enabled: true,
-					navigateByImgClick: true,
-		        },
-				image: {
-					verticalFit: true
-				},
-				zoom: {
-					enabled: true,
-					duration: 300
-				}
-		    });
-			// del-picture
-			parent.find('.picture-delete').each(function(index, item) {
-				$(item).on('click', function(e) {
-			        e.preventDefault();
-			        e.stopPropagation();
-					deletePicture(this);
-					/* var timer = setInterval(function() {
-						if (isDelSuccess) {
-							isDelSuccess = false;
-							clearInterval(timer);
-							window.location.href= window.location.href;
-						}
-					}, 500) */
-				});
-			});
-		} else {
-			toastr.error('该分类下暂无数据！');
-		}
-	}
+      parent.html('');
+      if (len > 0) {
+        for (var i = 0; i < len; i++) {
+          htmlStr += '<a class="slide" href="' + data[i].imgDetailUrl + '" data-url="' + data[i].imgDetailUrl + '" data-id="' + data[i].imgDetailId + '">' +
+            '<img src="' + data[i].imgDetailUrl + '" data-original-src-width="2000" data-original-src-height="2000" />' +
+            '<div class="picture-delete"><span aria-hidden="true">x</span></div>' +
+            '<span class="picture-download"><i class="fa fa-cloud-download"></i></span>' +
+            '</a>';
+        }
+        parent.html(htmlStr);
+        // lightbox
+        parent.find('.slide').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          closeBtnInside: false,
+          fixedContentPos: true,
+          mainClass: 'mfp-no-margins mfp-with-zoom',
+          gallery: {
+            enabled: true,
+            navigateByImgClick: true,
+          },
+          image: {
+            verticalFit: true
+          },
+          zoom: {
+            enabled: true,
+            duration: 300
+          }
+        });
+        // del-picture
+        parent.find('.picture-delete').each(function (index, item) {
+          $(item).on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            deletePicture(this);
+            /* var timer = setInterval(function() {
+              if (isDelSuccess) {
+                isDelSuccess = false;
+                clearInterval(timer);
+                window.location.href= window.location.href;
+              }
+            }, 500) */
+          });
+        });
+        // download-picture
+        parent.find('.picture-download').each(function (index, item) {
+          $(item).on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            downloadPicture(this);
+          });
+        });
+      } else {
+        toastr.error('该分类下暂无数据！');
+      }
+    }
     // 获取归属分类数据
     function getCategoryDown() {
       var resData;
@@ -210,61 +229,90 @@
     // 渲染分类select
     function renderCategory(data) {
       var htmlStr = '',
-        len = data ? data.length : 0;
+        len = data ? data.length : 0,
+        defaultValue = parseInt(getStorageCategory());
       if (len > 0) {
-        htmlStr += '<option value="-1" selected>--none--</option>';
+        htmlStr += '<option value="-1" '+ (defaultValue == -1 ? "selected" : "" ) +'>--none--</option>';
         for (var i = 0; i < len; i++) {
-          htmlStr += '<option value="' + data[i].imgCategoryId + '">' + data[i].imgCategoryName + '</option>';
+          htmlStr += '<option value="' + data[i].imgCategoryId + '" '+ (defaultValue == data[i].imgCategoryId ? "selected" : "" ) +'>' + data[i].imgCategoryName + '</option>';
         }
       }
 
-      $('.select-category').each(function(index, item) {
-    	  $(item).html(htmlStr);
+      // search category
+      $('.select-category').each(function (index, item) {
+        $(item).html(htmlStr);
+        $(item).select2({
+          language: 'zh-CN',
+          matcher: matchStart,
+          width: 'resolve',
+        });
       });
     }
 
+    function matchStart(params, data) {
+      if ($.trim(params.term) === '') {
+        return data;
+      }
+
+      var filteredData = [];
+      if (data.text.indexOf(params.term) == 0) {
+        filteredData.push(data);
+      }
+
+      if (filteredData.length) {
+        var modifiedData = $.extend({}, data, true);
+        modifiedData.children = filteredData;
+
+        return modifiedData;
+      }
+
+      // Return `null` if the term should not be displayed
+      return null;
+    }
+
     function renderCategoryData() {
-    	categoryData = getCategoryDown();
-    	renderCategory(categoryData);
+      categoryData = getCategoryDown();
+      renderCategory(categoryData);
     }
     // 获取图片数据
     function jumpPage(pn) {
       $.ajax({
         url: "${APP_PATH }/ImgDeatil/getImgDetailByCategoryId",
         data: {
-        	pn: parseInt(pn),
-        	imgDetailCategoryId: parseInt(getStorageCategory())
+          pn: parseInt(pn),
+          imgDetailCategoryId: parseInt(getStorageCategory())
         },
         type: "post",
         success: function (data) {
           if (data.code == 100) {
-        	  renderPhotoList($('#js-gallery'), data.extend.pageInfo.list);
-              renderPagination(data.extend.pageInfo);
+            renderPhotoList($('#js-gallery'), data.extend.pageInfo.list);
+            renderPagination(data.extend.pageInfo);
           } else {
             toastr.error('加载图片数据失败');
           }
         },
-        error: function(error) {
-        	console.log(error);
-        	toastr.error('加载数据失败')
+        error: function (error) {
+          console.log(error);
+          toastr.error('加载数据失败')
         },
-        complete: function() {
-            hideLoading();
+        complete: function () {
+          hideLoading();
         }
       });
     }
     // add picture list
-    function addPicture(url) {
-    	var bgUrl = '${APP_PATH }/static/img/Category/' + url,
-    		itemEl = $('<div class="input-file-item" data-id="'+ ($('#selectCategory').val()) +'" data-url="'+ bgUrl +'" data-index="' + (fileList.length) + '" style="background-image: url(' + bgUrl + ');"/>'),
-        	itemClose = $('<div class="picture-delete"><span aria-hidden="true">x</span></div>');
-      	itemEl.append(itemClose);
-      	// del-picture
-      	itemClose.on('click', function(e) {
-      		deletePicture(this);
-      		isDelSuccess = false;
-      	});
-      	$('.input-file-list').append(itemEl);
+    function addPicture(data) {
+      var bgUrl = data.imgDetail && data.imgDetail.imgDetailUrl,
+      	bgId = data.imgDetail && data.imgDetail.imgDetailId,
+        itemEl = $('<div class="input-file-item" data-id="' + bgId + '" data-url="' + bgUrl + '" data-index="' + (fileList.length) + '" style="background-image: url(' + bgUrl + ');"/>'),
+        itemClose = $('<div class="picture-delete"><span aria-hidden="true">x</span></div>');
+      itemEl.append(itemClose);
+      // del-picture
+      itemClose.on('click', function (e) {
+        deletePicture(this);
+        isDelSuccess = false;
+      });
+      $('.input-file-list').append(itemEl);
     }
 
     // 获取归属分类数据
@@ -273,57 +321,103 @@
         return item.imgCategoryId == id
       });
     }
-	// 上传图片
+    // 上传图片
     function uploadPicture(file) {
-    	var data = new FormData();
-        data.append('file', file);
-        data.append('imgDetailCategoryId', $('#selectCategory').val());
-        $.ajax({
-          url: "${APP_PATH }/UpImg/toUploadImgDetail",
-          data: data,
-          type: "post",
-          processData: false, // 不处理数据
-          contentType: false, // 不设置内容类型,
-          success: function (data) {
-            if (data.code == 100) {
-              toastr.success('保存图片成功');
-              addPicture(data.extend.uploadUrl);
-            } else {
-              toastr.error('保存图片失败');
-            }
-          },
-          error: function(err) {
-              toastr.error('保存图片失败');
-        	  console.log(err)
+      var data = new FormData();
+      data.append('file', file);
+      data.append('imgDetailCategoryId', $('#selectCategory').val());
+      $.ajax({
+        url: "${APP_PATH }/UpImg/toUploadImgDetail",
+        data: data,
+        type: "post",
+        processData: false, // 不处理数据
+        contentType: false, // 不设置内容类型,
+        success: function (data) {
+          if (data.code == 100) {
+            toastr.success('保存图片成功');
+            addPicture(data.extend);
+          } else {
+            toastr.error('保存图片失败');
           }
-        });
+        },
+        error: function (err) {
+          toastr.error('保存图片失败');
+          console.log(err)
+        },
+        complete: function () {
+          uploadProgress(true);
+        }
+      });
+    }
+    // 上传进度
+    function uploadProgress(flag) {
+      if (flag) {
+        $('.upload-progress').hide();
+      } else {
+        $('.upload-progress').show();
+      }
+    }
+    // 上传 rule
+    function uploadRule(file) {
+      // 上传小于2Mb
+      if (file.size > 1024 * 1024 * 10) {
+        toastr.error('上传图片大小超过10Mb，请选择合适的图片上传！');
+        $('.upload-progress').hide();
+        return false;
+      }
+      return true;
     }
     // 删除图片
     function deletePicture(self) {
-    	$.ajax({
-            url: "${APP_PATH }/ImgDeatil/delete",
-            data: JSON.stringify({
-            	"imgDetailId": $(self).parent().data('id'),
-            	"imgDetailUrl": $(self).parent().data('url')
-			}),
-            type: "post",
-            dataType: "json",
-            contentType: 'application/json',
-            success: function (data) {
-              if (data.code == 100) {
-            	  isDelSuccess = true;
-                toastr.success('删除图片成功');
-                $(self).parent().remove();
-                fileList.splice(parseInt($(self).data('index')), 1);
-              } else {
-                toastr.error('删除图片失败，请重试！');
-              }
-            },
-            error: function(err) {
-            	console.log(err);
-            	toastr.error('删除图片失败，请重试！');
-            }
-        });
+      $.ajax({
+        url: "${APP_PATH }/ImgDeatil/delete",
+        data: JSON.stringify({
+          "imgDetailId": $(self).parent().data('id'),
+          "imgDetailUrl": $(self).parent().data('url')
+        }),
+        type: "post",
+        dataType: "json",
+        contentType: 'application/json',
+        success: function (data) {
+          if (data.code == 100) {
+            isDelSuccess = true;
+            toastr.success('删除图片成功');
+            $(self).parent().remove();
+            fileList.splice(parseInt($(self).data('index')), 1);
+          } else {
+            toastr.error('删除图片失败，请重试！');
+          }
+        },
+        error: function (err) {
+          console.log(err);
+          toastr.error('删除图片失败，请重试！');
+        }
+      });
+    }
+    // 下载图片
+    function downloadPicture(self) {
+      showLoading();
+      var $downLoad = $('.download-btn'),
+        url = $(self).parent().data('url');
+      if ($downLoad.length <= 0) {
+        $downLoad = $('<a class="download-btn" download="download"></a>');
+        $(document.body).append($downLoad);
+      }
+      // to blob
+      fetch(url).then(function (response) {
+        if (response.status == 200) {
+          return response.blob();
+        }
+      }).then(function (blob) {
+        $downLoad.attr('href', URL.createObjectURL(blob));
+        $downLoad[0].click();
+        toastr.success('下载图片成功！');
+      }).catch(function (error) {
+        toastr.error('下载图片失败！');
+        console.log(error);
+      }).finally(function () {
+        hideLoading();
+      });
     }
 
     var categoryData = null,
@@ -343,9 +437,9 @@
       $('input[name="imgCategoryDesc"]').val(category.imgCategoryDesc);
     });
     $(document.body).on('change', '#selectCategory2', function (val) {
-    	setStorageCategory($(this).val());
-    	setStoragePage(1);
-    	window.location.href = window.location.href;
+      setStorageCategory($(this).val());
+      setStoragePage(1);
+      window.location.href = window.location.href;
     });
     // edit picture
     $(document.body).on('click', '#btn-edit', function (e) {
@@ -359,7 +453,10 @@
     $(document.body).on('change', '.input-file>input', function (e) {
       var file = $('input[name="imgDetailUrl"]')[0].files[0];
       $('input[name="imgDetailUrl"]').val('');
-      uploadPicture(file);
+      // enable status
+      uploadProgress(false);
+      // check picture is fit to rule
+      uploadRule(file) && uploadPicture(file);
     });
     // save picture
     $(document.body).on('click', '#btn-save', function (e) {

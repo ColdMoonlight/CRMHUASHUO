@@ -37,7 +37,7 @@
                 <li>
                   <a><i class="glyphicon glyphicon-picture"></i> 图片管理 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="${APP_PATH }/Index/tobackIndexPage">图片分类</a></li>
+                    <li><a href="${APP_PATH }/index/tobackIndexPage">图片分类</a></li>
                     <li><a href="${APP_PATH }/ImgCategory/toImgCategoryPage">图片列表</a></li>
                   </ul>
                 </li>

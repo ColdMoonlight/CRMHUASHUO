@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlbackProductViewDetailMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlbackProductViewDetail">
+    <id column="proViewDetail_id" jdbcType="INTEGER" property="proviewdetailId" />
+    <result column="proViewDetail_sessionid" jdbcType="VARCHAR" property="proviewdetailSessionid" />
+    <result column="proViewDetail_name" jdbcType="VARCHAR" property="proviewdetailName" />
+    <result column="proViewDetail_proid" jdbcType="INTEGER" property="proviewdetailProid" />
+    <result column="proViewDetail_proname" jdbcType="VARCHAR" property="proviewdetailProname" />
+    <result column="proViewDetail_seoname" jdbcType="VARCHAR" property="proviewdetailSeoname" />
+    <result column="proViewDetail_createTime" jdbcType="VARCHAR" property="proviewdetailCreatetime" />
+    <result column="proViewDetail_motifyTime" jdbcType="VARCHAR" property="proviewdetailMotifytime" />
+    <result column="proViewDetail_starttime" jdbcType="VARCHAR" property="proviewdetailStarttime" />
+    <result column="proViewDetail_endtime" jdbcType="VARCHAR" property="proviewdetailEndtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    proViewDetail_id, proViewDetail_sessionid, proViewDetail_name, proViewDetail_proid, 
+    proViewDetail_proname, proViewDetail_seoname, proViewDetail_createTime, proViewDetail_motifyTime,proViewDetail_starttime,proViewDetail_endtime
+  </sql>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlbackProductViewDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mlback_productviewdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mlback_productviewdetail
+    where proViewDetail_id = #{proviewdetailId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_mlback_productviewdetail
+    where proViewDetail_id = #{proviewdetailId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlbackProductViewDetailExample">
+    delete from tb_mlback_productviewdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlbackProductViewDetail">
+    insert into tb_mlback_productviewdetail (proViewDetail_id, proViewDetail_sessionid, 
+      proViewDetail_name, proViewDetail_proid, 
+      proViewDetail_proname, proViewDetail_seoname, 
+      proViewDetail_createTime, proViewDetail_motifyTime,
+      proViewDetail_starttime,proViewDetail_endtime
+      )
+    values (#{proviewdetailId,jdbcType=INTEGER}, #{proviewdetailSessionid,jdbcType=VARCHAR}, 
+      #{proviewdetailName,jdbcType=VARCHAR}, #{proviewdetailProid,jdbcType=INTEGER}, 
+      #{proviewdetailProname,jdbcType=VARCHAR}, #{proviewdetailSeoname,jdbcType=VARCHAR}, 
+      #{proviewdetailCreatetime,jdbcType=VARCHAR}, #{proviewdetailMotifytime,jdbcType=VARCHAR}, 
+      #{proviewdetailStarttime,jdbcType=VARCHAR}, #{proviewdetailEndtime,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlbackProductViewDetailExample" resultType="java.lang.Long">
+    select count(*) from tb_mlback_productviewdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mlback_productviewdetail
+    <set>
+      <if test="record.proviewdetailId != null">
+        proViewDetail_id = #{record.proviewdetailId,jdbcType=INTEGER},
+      </if>
+      <if test="record.proviewdetailSessionid != null">
+        proViewDetail_sessionid = #{record.proviewdetailSessionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proviewdetailName != null">
+        proViewDetail_name = #{record.proviewdetailName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proviewdetailProid != null">
+        proViewDetail_proid = #{record.proviewdetailProid,jdbcType=INTEGER},
+      </if>
+      <if test="record.proviewdetailProname != null">
+        proViewDetail_proname = #{record.proviewdetailProname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proviewdetailSeoname != null">
+        proViewDetail_seoname = #{record.proviewdetailSeoname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proviewdetailCreatetime != null">
+        proViewDetail_createTime = #{record.proviewdetailCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proviewdetailMotifytime != null">
+        proViewDetail_motifyTime = #{record.proviewdetailMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proviewdetailStarttime != null">
+        proViewDetail_starttime = #{record.proviewdetailStarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proviewdetailEndtime != null">
+        proViewDetail_endtime = #{record.proviewdetailEndtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mlback_productviewdetail
+    set proViewDetail_id = #{record.proviewdetailId,jdbcType=INTEGER},
+      proViewDetail_sessionid = #{record.proviewdetailSessionid,jdbcType=VARCHAR},
+      proViewDetail_name = #{record.proviewdetailName,jdbcType=VARCHAR},
+      proViewDetail_proid = #{record.proviewdetailProid,jdbcType=INTEGER},
+      proViewDetail_proname = #{record.proviewdetailProname,jdbcType=VARCHAR},
+      proViewDetail_seoname = #{record.proviewdetailSeoname,jdbcType=VARCHAR},
+      proViewDetail_createTime = #{record.proviewdetailCreatetime,jdbcType=VARCHAR},
+      proViewDetail_motifyTime = #{record.proviewdetailMotifytime,jdbcType=VARCHAR},
+      proViewDetail_starttime = #{record.proviewdetailStarttime,jdbcType=VARCHAR},
+      proViewDetail_endtime = #{record.proviewdetailEndtime,jdbcType=VARCHAR},
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlbackProductViewDetail">
+    update tb_mlback_productviewdetail
+    <set>
+      <if test="proviewdetailSessionid != null">
+        proViewDetail_sessionid = #{proviewdetailSessionid,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailName != null">
+        proViewDetail_name = #{proviewdetailName,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailProid != null">
+        proViewDetail_proid = #{proviewdetailProid,jdbcType=INTEGER},
+      </if>
+      <if test="proviewdetailProname != null">
+        proViewDetail_proname = #{proviewdetailProname,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailSeoname != null">
+        proViewDetail_seoname = #{proviewdetailSeoname,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailCreatetime != null">
+        proViewDetail_createTime = #{proviewdetailCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailMotifytime != null">
+        proViewDetail_motifyTime = #{proviewdetailMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailStarttime != null">
+        proViewDetail_starttime = #{proviewdetailStarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailEndtime != null">
+        proViewDetail_endtime = #{proviewdetailEndtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where proViewDetail_id = #{proviewdetailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlbackProductViewDetail">
+    update tb_mlback_productviewdetail
+    set proViewDetail_sessionid = #{proviewdetailSessionid,jdbcType=VARCHAR},
+      proViewDetail_name = #{proviewdetailName,jdbcType=VARCHAR},
+      proViewDetail_proid = #{proviewdetailProid,jdbcType=INTEGER},
+      proViewDetail_proname = #{proviewdetailProname,jdbcType=VARCHAR},
+      proViewDetail_seoname = #{proviewdetailSeoname,jdbcType=VARCHAR},
+      proViewDetail_createTime = #{proviewdetailCreatetime,jdbcType=VARCHAR},
+      proViewDetail_motifyTime = #{proviewdetailMotifytime,jdbcType=VARCHAR},
+      proViewDetail_starttime = #{proviewdetailStarttime,jdbcType=VARCHAR},
+      proViewDetail_endtime = #{proviewdetailEndtime,jdbcType=VARCHAR}
+    where proViewDetail_id = #{proviewdetailId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- insertSelective -->
+  <insert id="insertSelective" parameterType="com.atguigu.bean.MlbackProductViewDetail">
+    insert into tb_mlback_productviewdetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="proviewdetailId != null">
+        proViewDetail_id,
+      </if>
+      <if test="proviewdetailSessionid != null">
+        proViewDetail_sessionid,
+      </if>
+      <if test="proviewdetailName != null">
+        proViewDetail_name,
+      </if>
+      <if test="proviewdetailProid != null">
+        proViewDetail_proid,
+      </if>
+      <if test="proviewdetailProname != null">
+        proViewDetail_proname,
+      </if>
+      <if test="proviewdetailSeoname != null">
+        proViewDetail_seoname,
+      </if>
+      <if test="proviewdetailCreatetime != null">
+        proViewDetail_createTime,
+      </if>
+      <if test="proviewdetailMotifytime != null">
+        proViewDetail_motifyTime,
+      </if>
+      <if test="proviewdetailStarttime != null">
+        proViewDetail_starttime,
+      </if>
+      <if test="proviewdetailEndtime != null">
+        proViewDetail_endtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="proviewdetailId != null">
+        #{proviewdetailId,jdbcType=INTEGER},
+      </if>
+      <if test="proviewdetailSessionid != null">
+        #{proviewdetailSessionid,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailName != null">
+        #{proviewdetailName,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailProid != null">
+        #{proviewdetailProid,jdbcType=INTEGER},
+      </if>
+      <if test="proviewdetailProname != null">
+        #{proviewdetailProname,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailSeoname != null">
+        #{proviewdetailSeoname,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailCreatetime != null">
+        #{proviewdetailCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailMotifytime != null">
+        #{proviewdetailMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailStarttime != null">
+        #{proviewdetailStarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="proviewdetailEndtime != null">
+        #{proviewdetailEndtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- selectMlbackProductViewDetailByTime -->
+  <select id="selectMlbackProductViewDetailByTime" parameterType="com.atguigu.bean.MlbackProductViewDetail" resultMap="BaseResultMap">
+  	select proViewDetail_id, proViewDetail_seoname, proViewDetail_createTime from tb_mlback_productviewdetail where
+   	proViewDetail_createTime between #{proviewdetailStarttime,jdbcType=VARCHAR} and #{proviewdetailEndtime,jdbcType=VARCHAR} order by proViewDetail_seoname
+  </select>
+  
+</mapper>

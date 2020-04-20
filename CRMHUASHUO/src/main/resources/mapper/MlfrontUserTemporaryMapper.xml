@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlfrontUserTemporaryMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlfrontUserTemporary">
+    <id column="userTemporary_id" jdbcType="INTEGER" property="usertemporaryId" />
+    <result column="userTemporary_ip" jdbcType="VARCHAR" property="usertemporaryIp" />
+    <result column="userTemporary_createTime" jdbcType="VARCHAR" property="usertemporaryCreatetime" />
+    <result column="userTemporary_motifyTime" jdbcType="VARCHAR" property="usertemporaryMotifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    userTemporary_id, userTemporary_ip, userTemporary_createTime, userTemporary_motifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlfrontUserTemporaryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mlfront_usertemporary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mlfront_usertemporary
+    where userTemporary_id = #{usertemporaryId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlfrontUserTemporaryExample">
+    delete from tb_mlfront_usertemporary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlfrontUserTemporary">
+    insert into tb_mlfront_usertemporary (userTemporary_id, userTemporary_ip, 
+      userTemporary_createTime, userTemporary_motifyTime
+      )
+    values (#{usertemporaryId,jdbcType=INTEGER}, #{usertemporaryIp,jdbcType=VARCHAR}, 
+      #{usertemporaryCreatetime,jdbcType=VARCHAR}, #{usertemporaryMotifytime,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlfrontUserTemporaryExample" resultType="java.lang.Long">
+    select count(*) from tb_mlfront_usertemporary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mlfront_usertemporary
+    <set>
+      <if test="record.usertemporaryId != null">
+        userTemporary_id = #{record.usertemporaryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usertemporaryIp != null">
+        userTemporary_ip = #{record.usertemporaryIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usertemporaryCreatetime != null">
+        userTemporary_createTime = #{record.usertemporaryCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usertemporaryMotifytime != null">
+        userTemporary_motifyTime = #{record.usertemporaryMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mlfront_usertemporary
+    set userTemporary_id = #{record.usertemporaryId,jdbcType=INTEGER},
+      userTemporary_ip = #{record.usertemporaryIp,jdbcType=VARCHAR},
+      userTemporary_createTime = #{record.usertemporaryCreatetime,jdbcType=VARCHAR},
+      userTemporary_motifyTime = #{record.usertemporaryMotifytime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlfrontUserTemporary">
+    update tb_mlfront_usertemporary
+    set userTemporary_ip = #{usertemporaryIp,jdbcType=VARCHAR},
+      userTemporary_createTime = #{usertemporaryCreatetime,jdbcType=VARCHAR},
+      userTemporary_motifyTime = #{usertemporaryMotifytime,jdbcType=VARCHAR}
+    where userTemporary_id = #{usertemporaryId,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  <!-- insert -->
+  <insert id="insertSelective" parameterType="com.atguigu.bean.MlfrontUserTemporary">
+    insert into tb_mlfront_usertemporary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usertemporaryId != null">
+        userTemporary_id,
+      </if>
+      <if test="usertemporaryIp != null">
+        userTemporary_ip,
+      </if>
+      <if test="usertemporaryCreatetime != null">
+        userTemporary_createTime,
+      </if>
+      <if test="usertemporaryMotifytime != null">
+        userTemporary_motifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usertemporaryId != null">
+        #{usertemporaryId,jdbcType=INTEGER},
+      </if>
+      <if test="usertemporaryIp != null">
+        #{usertemporaryIp,jdbcType=VARCHAR},
+      </if>
+      <if test="usertemporaryCreatetime != null">
+        #{usertemporaryCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="usertemporaryMotifytime != null">
+        #{usertemporaryMotifytime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- insert -->
+ <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_mlfront_usertemporary
+    where userTemporary_id = #{usertemporaryId,jdbcType=INTEGER}
+  </delete>
+  <!-- update -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlfrontUserTemporary">
+    update tb_mlfront_usertemporary
+    <set>
+      <if test="usertemporaryIp != null">
+        userTemporary_ip = #{usertemporaryIp,jdbcType=VARCHAR},
+      </if>
+      <if test="usertemporaryCreatetime != null">
+        userTemporary_createTime = #{usertemporaryCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="usertemporaryMotifytime != null">
+        userTemporary_motifyTime = #{usertemporaryMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userTemporary_id = #{usertemporaryId,jdbcType=INTEGER}
+  </update>
+
+  <!-- selectAll使用中 -->
+  <select id="selectMlfrontUserTemporaryGetAll" parameterType="com.atguigu.bean.MlfrontUserTemporary" resultMap="BaseResultMap">
+    select *
+    from tb_mlfront_usertemporary order by userTemporary_id desc
+  </select>
+  <!-- select注册时查询使用中 -->
+  <select id="selectMlfrontUserTemporaryByIp" parameterType="com.atguigu.bean.MlfrontUserTemporary" resultMap="BaseResultMap">
+    select *
+    from tb_mlfront_usertemporary where userTemporary_ip = #{usertemporaryIp,jdbcType=VARCHAR}
+  </select>
+
+
+</mapper>

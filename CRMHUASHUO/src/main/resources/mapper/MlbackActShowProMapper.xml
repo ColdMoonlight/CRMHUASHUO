@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlbackActShowProMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlbackActShowPro">
+    <id column="actShowPro_id" jdbcType="INTEGER" property="actshowproId" />
+    <result column="actShowPro_name" jdbcType="VARCHAR" property="actshowproName" />
+    <result column="actShowPro_actNum" jdbcType="INTEGER" property="actshowproActnum" />
+    <result column="actShowPro_proId" jdbcType="INTEGER" property="actshowproProid" />
+    <result column="actShowPro_proName" jdbcType="VARCHAR" property="actshowproProname" />
+    <result column="actShowPro_seoname" jdbcType="VARCHAR" property="actshowproSeoname" />
+    <result column="actShowPro_cateId" jdbcType="INTEGER" property="actshowproCateid" />
+    <result column="actShowPro_cateName" jdbcType="VARCHAR" property="actshowproCatename" />
+    <result column="actShowPro_cateSeoName" jdbcType="VARCHAR" property="actshowproCateSeoname" />
+    <result column="actShowPro_pageSeoname" jdbcType="VARCHAR" property="actshowproPageSeoname" />
+    <result column="actShowPro_ifproORcate" jdbcType="INTEGER" property="actshowproIfproORcate" />
+    <result column="actShowPro_imgwapurl" jdbcType="VARCHAR" property="actshowproImgwapurl" />
+    <result column="actShowPro_imgpcurl" jdbcType="VARCHAR" property="actshowproImgpcurl" />
+    <result column="actShowPro_status" jdbcType="INTEGER" property="actshowproStatus" />
+    <result column="actShowPro_orderth" jdbcType="INTEGER" property="actshowproOrderth" />
+    <result column="actShowPro_createTime" jdbcType="VARCHAR" property="actshowproCreatetime" />
+    <result column="actShowPro_motifyTime" jdbcType="VARCHAR" property="actshowproMotifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    actShowPro_id, actShowPro_name, actShowPro_actNum, actShowPro_proId, actShowPro_proName, actShowPro_seoname,
+    actShowPro_cateId, actShowPro_cateName, actShowPro_cateSeoName, actShowPro_pageSeoname, actShowPro_ifproORcate, actShowPro_imgwapurl, actShowPro_imgpcurl, actShowPro_status, actShowPro_orderth, 
+    actShowPro_createTime, actShowPro_motifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlbackActShowProExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mlback_actshowpro
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mlback_actshowpro
+    where actShowPro_id = #{actshowproId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlbackActShowProExample">
+    delete from tb_mlback_actshowpro
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlbackActShowPro">
+    insert into tb_mlback_actshowpro (actShowPro_id, actShowPro_name, actShowPro_actNum, 
+      actShowPro_proId, actShowPro_proName, actShowPro_seoname, actShowPro_imgwapurl, 
+      actShowPro_cateId, actShowPro_cateName, actShowPro_cateSeoName, actShowPro_pageSeoname, actShowPro_ifproORcate, actShowPro_imgpcurl, actShowPro_status, actShowPro_orderth, 
+      actShowPro_createTime, actShowPro_motifyTime
+      )
+    values (#{actshowproId,jdbcType=INTEGER}, #{actshowproName,jdbcType=VARCHAR}, #{actshowproActnum,jdbcType=INTEGER}, 
+      #{actshowproProid,jdbcType=INTEGER}, #{actshowproProname,jdbcType=VARCHAR}, #{actshowproSeoname,jdbcType=VARCHAR}, #{actshowproImgwapurl,jdbcType=VARCHAR}, 
+      #{actshowproCateid,jdbcType=INTEGER}, #{actshowproCatename,jdbcType=VARCHAR}, #{actshowproCateSeoname,jdbcType=VARCHAR}, #{actshowproPageSeoname,jdbcType=VARCHAR}, #{actshowproIfproORcate,jdbcType=INTEGER}, 
+      #{actshowproImgpcurl,jdbcType=VARCHAR}, #{actshowproStatus,jdbcType=INTEGER}, #{actshowproOrderth,jdbcType=INTEGER}, 
+      #{actshowproCreatetime,jdbcType=VARCHAR}, #{actshowproMotifytime,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlbackActShowProExample" resultType="java.lang.Long">
+    select count(*) from tb_mlback_actshowpro
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mlback_actshowpro
+    <set>
+      <if test="record.actshowproId != null">
+        actShowPro_id = #{record.actshowproId,jdbcType=INTEGER},
+      </if>
+      <if test="record.actshowproName != null">
+        actShowPro_name = #{record.actshowproName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actshowproActnum != null">
+        actShowPro_actNum = #{record.actshowproActnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.actshowproProid != null">
+        actShowPro_proId = #{record.actshowproProid,jdbcType=INTEGER},
+      </if>
+      <if test="record.actshowproProname != null">
+        actShowPro_proName = #{record.actshowproProname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actshowproSeoname != null">
+        actShowPro_seoname = #{record.actshowproSeoname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actshowproCateid != null">
+        actShowPro_cateId = #{record.actshowproCateid,jdbcType=INTEGER},
+      </if>
+      <if test="record.actshowproCatename != null">
+        actShowPro_cateName = #{record.actshowproCatename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actshowproCateSeoname != null">
+        actShowPro_cateSeoName = #{record.actshowproCateSeoname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actshowproPageSeoname != null">
+        actShowPro_pageSeoname = #{record.actshowproPageSeoname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actshowproIfproORcate != null">
+        actShowPro_ifproORcate = #{record.actshowproIfproORcate,jdbcType=INTEGER},
+      </if>
+      <if test="record.actshowproImgwapurl != null">
+        actShowPro_imgwapurl = #{record.actshowproImgwapurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actshowproImgpcurl != null">
+        actShowPro_imgpcurl = #{record.actshowproImgpcurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actshowproStatus != null">
+        actShowPro_status = #{record.actshowproStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.actshowproOrderth != null">
+        actShowPro_orderth = #{record.actshowproOrderth,jdbcType=INTEGER},
+      </if>
+      <if test="record.actshowproCreatetime != null">
+        actShowPro_createTime = #{record.actshowproCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actshowproMotifytime != null">
+        actShowPro_motifyTime = #{record.actshowproMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mlback_actshowpro
+    set actShowPro_id = #{record.actshowproId,jdbcType=INTEGER},
+      actShowPro_name = #{record.actshowproName,jdbcType=VARCHAR},
+      actShowPro_actNum = #{record.actshowproActnum,jdbcType=INTEGER},
+      actShowPro_proId = #{record.actshowproProid,jdbcType=INTEGER},
+      actShowPro_proName = #{record.actshowproProname,jdbcType=VARCHAR},
+      actShowPro_seoname = #{record.actshowproSeoname,jdbcType=VARCHAR},
+      actShowPro_cateId = #{record.actshowproCateid,jdbcType=INTEGER},
+      actShowPro_cateName = #{record.actshowproCatename,jdbcType=VARCHAR},
+      actShowPro_cateSeoName = #{record.actshowproCateSeoname,jdbcType=VARCHAR},
+      actShowPro_pageSeoname = #{record.actshowproPageSeoname,jdbcType=VARCHAR},
+      actShowPro_ifproORcate = #{record.actshowproIfproORcate,jdbcType=INTEGER},
+      actShowPro_imgwapurl = #{record.actshowproImgwapurl,jdbcType=VARCHAR},
+      actShowPro_imgpcurl = #{record.actshowproImgpcurl,jdbcType=VARCHAR},
+      actShowPro_status = #{record.actshowproStatus,jdbcType=INTEGER},
+      actShowPro_orderth = #{record.actshowproOrderth,jdbcType=INTEGER},
+      actShowPro_createTime = #{record.actshowproCreatetime,jdbcType=VARCHAR},
+      actShowPro_motifyTime = #{record.actshowproMotifytime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlbackActShowPro">
+    update tb_mlback_actshowpro
+    set actShowPro_name = #{actshowproName,jdbcType=VARCHAR},
+      actShowPro_actNum = #{actshowproActnum,jdbcType=INTEGER},
+      actShowPro_proId = #{actshowproProid,jdbcType=INTEGER},
+      actShowPro_proName = #{actshowproProname,jdbcType=VARCHAR},
+      actShowPro_seoname = #{actshowproSeoname,jdbcType=VARCHAR},
+      actShowPro_cateId = #{actshowproCateid,jdbcType=INTEGER},
+      actShowPro_cateName = #{actshowproCatename,jdbcType=VARCHAR},
+      actShowPro_cateSeoName = #{actshowproCateSeoname,jdbcType=VARCHAR},
+      actShowPro_pageSeoname = #{actshowproPageSeoname,jdbcType=VARCHAR},
+      actShowPro_ifproORcate = #{actshowproIfproORcate,jdbcType=INTEGER},
+      actShowPro_imgwapurl = #{actshowproImgwapurl,jdbcType=VARCHAR},
+      actShowPro_imgpcurl = #{actshowproImgpcurl,jdbcType=VARCHAR},
+      actShowPro_status = #{actshowproStatus,jdbcType=INTEGER},
+      actShowPro_orderth = #{actshowproOrderth,jdbcType=INTEGER},
+      actShowPro_createTime = #{actshowproCreatetime,jdbcType=VARCHAR},
+      actShowPro_motifyTime = #{actshowproMotifytime,jdbcType=VARCHAR}
+    where actShowPro_id = #{actshowproId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <!-- insertSelective -->
+  <insert id="insertSelective" parameterType="com.atguigu.bean.MlbackActShowPro">
+    insert into tb_mlback_actshowpro
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="actshowproId != null">
+        actShowPro_id,
+      </if>
+      <if test="actshowproName != null">
+        actShowPro_name,
+      </if>
+      <if test="actshowproActnum != null">
+        actShowPro_actNum,
+      </if>
+      <if test="actshowproProid != null">
+        actShowPro_proId,
+      </if>
+      <if test="actshowproProname != null">
+        actShowPro_proName,
+      </if>
+      <if test="actshowproSeoname != null">
+        actShowPro_seoname,
+      </if>
+      <if test="actshowproCateid != null">
+        actShowPro_cateId,
+      </if>
+      <if test="actshowproCatename != null">
+        actShowPro_cateName,
+      </if>
+      <if test="actshowproCateSeoname != null">
+		actShowPro_cateSeoName,
+	  </if>
+      <if test="actshowproPageSeoname != null">
+        actShowPro_pageSeoname,
+      </if>
+      <if test="actshowproIfproORcate != null">
+        actShowPro_ifproORcate,
+      </if>
+      <if test="actshowproImgwapurl != null">
+        actShowPro_imgwapurl,
+      </if>
+      <if test="actshowproImgpcurl != null">
+        actShowPro_imgpcurl,
+      </if>
+      <if test="actshowproStatus != null">
+        actShowPro_status,
+      </if>
+      <if test="actshowproOrderth != null">
+        actShowPro_orderth,
+      </if>
+      <if test="actshowproCreatetime != null">
+        actShowPro_createTime,
+      </if>
+      <if test="actshowproMotifytime != null">
+        actShowPro_motifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="actshowproId != null">
+        #{actshowproId,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproName != null">
+        #{actshowproName,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproActnum != null">
+        #{actshowproActnum,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproProid != null">
+        #{actshowproProid,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproProname != null">
+        #{actshowproProname,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproSeoname != null">
+        #{actshowproSeoname,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproCateid != null">
+        #{actshowproCateid,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproCatename != null">
+        #{actshowproCatename,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproCateSeoname != null">
+		#{actshowproCateSeoname,jdbcType=VARCHAR},
+	  </if>
+      <if test="actshowproPageSeoname != null">
+        #{actshowproPageSeoname,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproIfproORcate != null">
+        #{actshowproIfproORcate,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproImgwapurl != null">
+        #{actshowproImgwapurl,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproImgpcurl != null">
+        #{actshowproImgpcurl,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproStatus != null">
+        #{actshowproStatus,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproOrderth != null">
+        #{actshowproOrderth,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproCreatetime != null">
+        #{actshowproCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproMotifytime != null">
+        #{actshowproMotifytime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- deleteByPrimaryKey -->
+   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_mlback_actshowpro
+    where actShowPro_id = #{actshowproId,jdbcType=INTEGER}
+  </delete>
+  <!-- updateByPrimaryKeySelective -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlbackActShowPro">
+    update tb_mlback_actshowpro
+    <set>
+      <if test="actshowproName != null">
+        actShowPro_name = #{actshowproName,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproActnum != null">
+        actShowPro_actNum = #{actshowproActnum,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproProid != null">
+        actShowPro_proId = #{actshowproProid,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproProname != null">
+        actShowPro_proName = #{actshowproProname,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproSeoname != null">
+        actShowPro_seoname = #{actshowproSeoname,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproCateid != null">
+        actShowPro_cateId = #{actshowproCateid,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproCatename != null">
+        actShowPro_cateName = #{actshowproCatename,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproCateSeoname != null">
+		actShowPro_cateSeoName = #{actshowproCateSeoname,jdbcType=VARCHAR},
+	  </if>
+      <if test="actshowproPageSeoname != null">
+        actShowPro_pageSeoname = #{actshowproPageSeoname,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproIfproORcate != null">
+        actShowPro_ifproORcate = #{actshowproIfproORcate,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproImgwapurl != null">
+        actShowPro_imgwapurl = #{actshowproImgwapurl,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproImgpcurl != null">
+        actShowPro_imgpcurl = #{actshowproImgpcurl,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproStatus != null">
+        actShowPro_status = #{actshowproStatus,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproOrderth != null">
+        actShowPro_orderth = #{actshowproOrderth,jdbcType=INTEGER},
+      </if>
+      <if test="actshowproCreatetime != null">
+        actShowPro_createTime = #{actshowproCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="actshowproMotifytime != null">
+        actShowPro_motifyTime = #{actshowproMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where actShowPro_id = #{actshowproId,jdbcType=INTEGER}
+  </update>
+  <!-- selectMlbackActShowProById -->
+  <select id="selectMlbackActShowProById" parameterType="com.atguigu.bean.MlbackActShowPro" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_actshowpro 
+    where actShowPro_id = #{actshowproId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- selectMlbackActShowProGetAll -->
+  <select id="selectMlbackActShowProGetAll" parameterType="com.atguigu.bean.MlbackActShowPro" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_actshowpro order by actShowPro_id desc
+  </select>
+  
+   <!-- selectMlbackActShowProByActnum -->
+  <select id="selectMlbackActShowProByActnum" parameterType="com.atguigu.bean.MlbackActShowPro" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_actshowpro 
+    where actShowPro_actNum = #{actshowproActnum,jdbcType=INTEGER} and actShowPro_status = #{actshowproStatus,jdbcType=INTEGER}
+    order by actShowPro_orderth
+  </select>
+  
+</mapper>

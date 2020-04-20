@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlbackProductMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlbackProduct">
+    <id column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_color" jdbcType="VARCHAR" property="productColor" />
+    <result column="product_seo" jdbcType="VARCHAR" property="productSeo" />
+    <result column="product_categoryId" jdbcType="INTEGER" property="productCategoryid" />
+    <result column="product_categoryName" jdbcType="VARCHAR" property="productCategoryname" />
+    <result column="product_mainimgurl" jdbcType="VARCHAR" property="productMainimgurl" />
+    <result column="product_mainfuimgurl" jdbcType="VARCHAR" property="productMainFuimgurl" />
+    <result column="product_originalPrice" jdbcType="DECIMAL" property="productOriginalprice" />
+    <result column="product_haveSaleNum" jdbcType="INTEGER" property="productHavesalenum" />
+    <result column="product_status" jdbcType="INTEGER" property="productStatus" />
+    <result column="product_createTime" jdbcType="VARCHAR" property="productCreatetime" />
+    <result column="product_motifyTime" jdbcType="VARCHAR" property="productMotifytime" />
+    <result column="product_admin_id" jdbcType="INTEGER" property="productAdminId" />
+    <result column="product_admin_operatorName" jdbcType="VARCHAR" property="productAdminOperatorname" />
+    <result column="product_lable" jdbcType="INTEGER" property="productLable" />
+    <result column="product_firsth" jdbcType="INTEGER" property="productFirsth" />
+    <result column="product_actoffId" jdbcType="INTEGER" property="productActoffid" />
+    <result column="product_actoffOff" jdbcType="INTEGER" property="productActoffoff" />
+    <result column="product_actoffif" jdbcType="INTEGER" property="productActoffIf" />
+    <result column="product_reviewNum" jdbcType="INTEGER" property="productReviewnum" />
+    <result column="product_category_idsStr" jdbcType="VARCHAR" property="productCategoryIdsStr" />
+    <result column="product_category_namesStr" jdbcType="VARCHAR" property="productCategoryNamesStr" />
+    <result column="product_meta_desc" jdbcType="VARCHAR" property="productMetaDesc" />
+    <result column="product_meta_title" jdbcType="VARCHAR" property="productMetaTitle" />
+    <result column="product_meta_keyWords" jdbcType="VARCHAR" property="productMetaKeyWords" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.atguigu.bean.MlbackProduct">
+    <result column="product_desc" jdbcType="LONGVARCHAR" property="productDesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    product_id, product_name, product_color, product_seo, product_categoryId, product_mainimgurl, product_originalPrice, 
+    product_haveSaleNum, product_status, product_createTime, product_motifyTime, product_admin_id, 
+    product_admin_operatorName, product_lable, product_firsth, product_actoffId, product_actoffOff, product_actoffif, product_reviewNum,
+    product_category_idsStr,product_category_namesStr,product_meta_desc,product_meta_title,product_meta_keyWords
+  </sql>
+  <sql id="Blob_Column_List">
+    product_desc
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.atguigu.bean.MlbackProductExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_mlback_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlbackProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mlback_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_mlback_product
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlbackProductExample">
+    delete from tb_mlback_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlbackProduct">
+    insert into tb_mlback_product (product_id, product_name, product_seo, 
+      product_categoryId, product_mainimgurl, product_originalPrice, 
+      product_haveSaleNum, product_status, product_createTime, 
+      product_motifyTime, product_admin_id, product_admin_operatorName, 
+      product_lable, product_firsth, product_actoffId, product_actoffOff, product_actoffif,
+      product_reviewNum, product_desc,product_category_idsStr,product_category_namesStr,product_meta_desc)
+    values (#{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productSeo,jdbcType=VARCHAR}, 
+      #{productCategoryid,jdbcType=INTEGER}, #{productMainimgurl,jdbcType=VARCHAR}, #{productOriginalprice,jdbcType=DECIMAL}, 
+      #{productHavesalenum,jdbcType=INTEGER}, #{productStatus,jdbcType=INTEGER}, #{productCreatetime,jdbcType=VARCHAR}, 
+      #{productMotifytime,jdbcType=VARCHAR}, #{productAdminId,jdbcType=INTEGER}, #{productAdminOperatorname,jdbcType=VARCHAR}, 
+      #{productLable,jdbcType=INTEGER}, #{productFirsth,jdbcType=INTEGER}, #{productActoffid,jdbcType=INTEGER}, #{productActoffoff,jdbcType=INTEGER}, #{productActoffIf,jdbcType=INTEGER}, 
+      #{productReviewnum,jdbcType=INTEGER}, #{productDesc,jdbcType=LONGVARCHAR}, 
+      #{productCategoryIdsStr,jdbcType=VARCHAR}, #{productCategoryNamesStr,jdbcType=VARCHAR}, #{productMetaDesc,jdbcType=VARCHAR},
+      #{productMetaTitle,jdbcType=VARCHAR}, #{productMetaKeyWords,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlbackProductExample" resultType="java.lang.Long">
+    select count(*) from tb_mlback_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mlback_product
+    <set>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productName != null">
+        product_name = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productSeo != null">
+        product_seo = #{record.productSeo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCategoryid != null">
+        product_categoryId = #{record.productCategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="record.productMainimgurl != null">
+        product_mainimgurl = #{record.productMainimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productOriginalprice != null">
+        product_originalPrice = #{record.productOriginalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productHavesalenum != null">
+        product_haveSaleNum = #{record.productHavesalenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.productStatus != null">
+        product_status = #{record.productStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.productCreatetime != null">
+        product_createTime = #{record.productCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productMotifytime != null">
+        product_motifyTime = #{record.productMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productAdminId != null">
+        product_admin_id = #{record.productAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productAdminOperatorname != null">
+        product_admin_operatorName = #{record.productAdminOperatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productLable != null">
+        product_lable = #{record.productLable,jdbcType=INTEGER},
+      </if>
+      <if test="record.productFirsth != null">
+        product_firsth = #{record.productFirsth,jdbcType=INTEGER},
+      </if>
+      <if test="record.productActoffid != null">
+        product_actoffId = #{record.productActoffid,jdbcType=INTEGER},
+      </if>
+      <if test="record.productActoffoff != null">
+        product_actoffOff = #{record.productActoffoff,jdbcType=INTEGER},
+      </if>
+      <if test="record.productActoffIf != null">
+        product_actoffif = #{record.productActoffIf,jdbcType=INTEGER},
+      </if>
+      <if test="record.productReviewnum != null">
+        product_reviewNum = #{record.productReviewnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.productDesc != null">
+        product_desc = #{record.productDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.productCategoryIdsStr != null">
+        product_category_idsStr = #{record.productCategoryIdsStr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCategoryNamesStr != null">
+        product_category_namesStr = #{record.productCategoryNamesStr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productMetaDesc != null">
+        product_meta_desc = #{record.productMetaDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productMetaTitle != null">
+        product_meta_title = #{record.productMetaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productMetaKeyWords != null">
+        product_meta_keyWords = #{record.productMetaKeyWords,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tb_mlback_product
+    set product_id = #{record.productId,jdbcType=INTEGER},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      product_seo = #{record.productSeo,jdbcType=VARCHAR},
+      product_categoryId = #{record.productCategoryid,jdbcType=INTEGER},
+      product_mainimgurl = #{record.productMainimgurl,jdbcType=VARCHAR},
+      product_originalPrice = #{record.productOriginalprice,jdbcType=DECIMAL},
+      product_haveSaleNum = #{record.productHavesalenum,jdbcType=INTEGER},
+      product_status = #{record.productStatus,jdbcType=INTEGER},
+      product_createTime = #{record.productCreatetime,jdbcType=VARCHAR},
+      product_motifyTime = #{record.productMotifytime,jdbcType=VARCHAR},
+      product_admin_id = #{record.productAdminId,jdbcType=INTEGER},
+      product_admin_operatorName = #{record.productAdminOperatorname,jdbcType=VARCHAR},
+      product_lable = #{record.productLable,jdbcType=INTEGER},
+      product_firsth = #{record.productFirsth,jdbcType=INTEGER},
+      product_actoffId = #{record.productActoffid,jdbcType=INTEGER},
+      product_actoffOff = #{record.productActoffoff,jdbcType=INTEGER},
+      product_actoffif = #{record.productActoffIf,jdbcType=INTEGER},
+      product_reviewNum = #{record.productReviewnum,jdbcType=INTEGER},
+      product_desc = #{record.productDesc,jdbcType=LONGVARCHAR},
+      product_category_idsStr = #{record.productCategoryIdsStr,jdbcType=VARCHAR},
+      product_category_namesStr = #{record.productCategoryNamesStr,jdbcType=VARCHAR},
+      product_meta_desc = #{record.productMetaDesc,jdbcType=VARCHAR},
+      product_meta_title = #{record.productMetaTitle,jdbcType=VARCHAR},
+      product_meta_keyWords = #{record.productMetaKeyWords,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mlback_product
+    set product_id = #{record.productId,jdbcType=INTEGER},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      product_seo = #{record.productSeo,jdbcType=VARCHAR},
+      product_categoryId = #{record.productCategoryid,jdbcType=INTEGER},
+      product_mainimgurl = #{record.productMainimgurl,jdbcType=VARCHAR},
+      product_originalPrice = #{record.productOriginalprice,jdbcType=DECIMAL},
+      product_haveSaleNum = #{record.productHavesalenum,jdbcType=INTEGER},
+      product_status = #{record.productStatus,jdbcType=INTEGER},
+      product_createTime = #{record.productCreatetime,jdbcType=VARCHAR},
+      product_motifyTime = #{record.productMotifytime,jdbcType=VARCHAR},
+      product_admin_id = #{record.productAdminId,jdbcType=INTEGER},
+      product_admin_operatorName = #{record.productAdminOperatorname,jdbcType=VARCHAR},
+      product_lable = #{record.productLable,jdbcType=INTEGER},
+      product_firsth = #{record.productFirsth,jdbcType=INTEGER},
+      product_actoffId = #{record.productActoffid,jdbcType=INTEGER},
+      product_actoffOff = #{record.productActoffoff,jdbcType=INTEGER},
+      product_actoffif = #{record.productActoffIf,jdbcType=INTEGER},
+      product_reviewNum = #{record.productReviewnum,jdbcType=INTEGER},
+      product_category_idsStr = #{record.productCategoryIdsStr,jdbcType=VARCHAR},
+      product_category_namesStr = #{record.productCategoryNamesStr,jdbcType=VARCHAR},
+      product_meta_desc = #{record.productMetaDesc,jdbcType=VARCHAR},
+      product_meta_title = #{record.productMetaTitle,jdbcType=VARCHAR},
+      product_meta_keyWords = #{record.productMetaKeyWords,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.atguigu.bean.MlbackProduct">
+    update tb_mlback_product
+    set product_name = #{productName,jdbcType=VARCHAR},
+      product_seo = #{productSeo,jdbcType=VARCHAR},
+      product_categoryId = #{productCategoryid,jdbcType=INTEGER},
+      product_mainimgurl = #{productMainimgurl,jdbcType=VARCHAR},
+      product_originalPrice = #{productOriginalprice,jdbcType=DECIMAL},
+      product_haveSaleNum = #{productHavesalenum,jdbcType=INTEGER},
+      product_status = #{productStatus,jdbcType=INTEGER},
+      product_createTime = #{productCreatetime,jdbcType=VARCHAR},
+      product_motifyTime = #{productMotifytime,jdbcType=VARCHAR},
+      product_admin_id = #{productAdminId,jdbcType=INTEGER},
+      product_admin_operatorName = #{productAdminOperatorname,jdbcType=VARCHAR},
+      product_lable = #{productLable,jdbcType=INTEGER},
+      product_firsth = #{productFirsth,jdbcType=INTEGER},
+      product_actoffId = #{productActoffid,jdbcType=INTEGER},
+      product_actoffOff = #{productActoffoff,jdbcType=INTEGER},
+      product_actoffif = #{productActoffIf,jdbcType=INTEGER},
+      product_reviewNum = #{productReviewnum,jdbcType=INTEGER},
+      product_desc = #{productDesc,jdbcType=LONGVARCHAR},
+      product_category_idsStr = #{productCategoryIdsStr,jdbcType=VARCHAR},
+      product_category_namesStr = #{productCategoryNamesStr,jdbcType=VARCHAR},
+      product_meta_desc = #{productMetaDesc,jdbcType=VARCHAR},
+      product_meta_title = #{productMetaTitle,jdbcType=VARCHAR},
+      product_meta_keyWords = #{productMetaKeyWords,jdbcType=VARCHAR}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlbackProduct">
+    update tb_mlback_product
+    set product_name = #{productName,jdbcType=VARCHAR},
+      product_seo = #{productSeo,jdbcType=VARCHAR},
+      product_categoryId = #{productCategoryid,jdbcType=INTEGER},
+      product_mainimgurl = #{productMainimgurl,jdbcType=VARCHAR},
+      product_originalPrice = #{productOriginalprice,jdbcType=DECIMAL},
+      product_haveSaleNum = #{productHavesalenum,jdbcType=INTEGER},
+      product_status = #{productStatus,jdbcType=INTEGER},
+      product_createTime = #{productCreatetime,jdbcType=VARCHAR},
+      product_motifyTime = #{productMotifytime,jdbcType=VARCHAR},
+      product_admin_id = #{productAdminId,jdbcType=INTEGER},
+      product_admin_operatorName = #{productAdminOperatorname,jdbcType=VARCHAR},
+      product_lable = #{productLable,jdbcType=INTEGER},
+      product_firsth = #{productFirsth,jdbcType=INTEGER},
+      product_actoffId = #{productActoffid,jdbcType=INTEGER},
+      product_actoffOff = #{productActoffoff,jdbcType=INTEGER},
+      product_actoffif = #{productActoffIf,jdbcType=INTEGER},
+      product_reviewNum = #{productReviewnum,jdbcType=INTEGER},
+      product_category_idsStr = #{productCategoryIdsStr,jdbcType=VARCHAR},
+      product_category_namesStr = #{productCategoryNamesStr,jdbcType=VARCHAR},
+      product_meta_desc = #{productMetaDesc,jdbcType=VARCHAR}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- selectOne使用中 -->
+  <select id="selectMlbackProduct" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_product
+    where product_id = #{productId,jdbcType=INTEGER}
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productColor != null">
+        product_color = #{productColor,jdbcType=VARCHAR},
+      </if>
+      <if test="productSeo != null">
+        product_seo = #{productSeo,jdbcType=VARCHAR},
+      </if>
+      <if test="productCategoryid != null">
+        product_categoryId = #{productCategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="productCategoryname != null">
+        product_categoryName = #{productCategoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="productMainimgurl != null">
+        product_mainimgurl = #{productMainimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="productMainFuimgurl != null">
+        product_mainfuimgurl = #{productMainFuimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="productOriginalprice != null">
+        product_originalPrice = #{productOriginalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="productHavesalenum != null">
+        product_haveSaleNum = #{productHavesalenum,jdbcType=INTEGER},
+      </if>
+      <if test="productStatus != null">
+        product_status = #{productStatus,jdbcType=INTEGER},
+      </if>
+      <if test="productCreatetime != null">
+        product_createTime = #{productCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="productMotifytime != null">
+        product_motifyTime = #{productMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="productAdminId != null">
+        product_admin_id = #{productAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="productAdminOperatorname != null">
+        product_admin_operatorName = #{productAdminOperatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable != null">
+        product_lable = #{productLable,jdbcType=INTEGER},
+      </if>
+      <if test="productFirsth != null">
+        product_firsth = #{productFirsth,jdbcType=INTEGER},
+      </if>
+      <if test="productActoffid != null">
+        product_actoffId = #{productActoffid,jdbcType=INTEGER},
+      </if>
+      <if test="productActoffoff != null">
+        product_actoffOff = #{productActoffoff,jdbcType=INTEGER},
+      </if>
+      <if test="productActoffIf != null">
+        product_actoffif = #{productActoffIf,jdbcType=INTEGER},
+      </if>
+      <if test="productReviewnum != null">
+        product_reviewNum = #{productReviewnum,jdbcType=INTEGER},
+      </if>
+      <if test="productDesc != null">
+        product_desc = #{productDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="productCategoryIdsStr != null">
+        product_category_idsStr = #{productCategoryIdsStr,jdbcType=VARCHAR},
+      </if>
+      <if test="productCategoryNamesStr != null">
+        product_category_namesStr = #{productCategoryNamesStr,jdbcType=VARCHAR},
+      </if>
+      <if test="productMetaDesc != null">
+        product_meta_desc = #{productMetaDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="productMetaTitle != null">
+        product_meta_title = #{productMetaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="productMetaKeyWords != null">
+        product_meta_keyWords = #{productMetaKeyWords,jdbcType=VARCHAR},
+      </if>
+  </select>
+  <!-- selectMlbackProductByPName使用中 -->
+  <select id="selectMlbackProductByPName" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_product
+    where product_name = #{productName,jdbcType=VARCHAR}
+  </select>
+  <!-- selectAll使用中 -->
+  <select id="selectMlbackProductGetAll" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+   <!-- select *
+    from tb_mlback_product order by product_lable ,product_firsth,product_id desc -->
+     select *
+    from tb_mlback_product order by product_name
+  </select>
+  <!-- selectAll使用中 -->
+  <select id="selectMlbackProductlast" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+     select product_id,product_name
+    from tb_mlback_product order by product_id desc
+  </select>
+  <!-- insert使用中 -->
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="productId" parameterType="com.atguigu.bean.MlbackProduct">
+    insert into tb_mlback_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productColor != null">
+        product_color,
+      </if>
+      <if test="productSeo != null">
+        product_seo,
+      </if>
+      <if test="productCategoryid != null">
+        product_categoryId,
+      </if>
+      <if test="productCategoryname != null">
+        product_categoryName,
+      </if>      
+      <if test="productMainimgurl != null">
+        product_mainimgurl,
+      </if>
+      <if test="productMainFuimgurl != null">
+        product_mainfuimgurl,
+      </if>
+      <if test="productOriginalprice != null">
+        product_originalPrice,
+      </if>
+      <if test="productHavesalenum != null">
+        product_haveSaleNum,
+      </if>
+      <if test="productStatus != null">
+        product_status,
+      </if>
+      <if test="productCreatetime != null">
+        product_createTime,
+      </if>
+      <if test="productMotifytime != null">
+        product_motifyTime,
+      </if>
+      <if test="productAdminId != null">
+        product_admin_id,
+      </if>
+      <if test="productAdminOperatorname != null">
+        product_admin_operatorName,
+      </if>
+      <if test="productLable != null">
+        product_lable,
+      </if>
+      <if test="productFirsth != null">
+        product_firsth,
+      </if>
+      <if test="productActoffid != null">
+        product_actoffId,
+      </if>
+      <if test="productActoffoff != null">
+        product_actoffOff,
+      </if>
+      <if test="productActoffIf != null">
+        product_actoffif,
+      </if>
+      <if test="productReviewnum != null">
+        product_reviewNum,
+      </if>
+      <if test="productDesc != null">
+        product_desc,
+      </if>
+      <if test="productCategoryIdsStr != null">
+        product_category_idsStr,
+      </if>
+      <if test="productCategoryNamesStr != null">
+        product_category_namesStr,
+      </if>
+      <if test="productMetaDesc != null">
+        product_meta_desc,
+      </if>
+      <if test="productMetaTitle != null">
+        product_meta_title,
+      </if>
+      <if test="productMetaKeyWords != null">
+        product_meta_keyWords,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productColor != null">
+        #{productColor,jdbcType=VARCHAR},
+      </if>
+      <if test="productSeo != null">
+        #{productSeo,jdbcType=VARCHAR},
+      </if>
+      <if test="productCategoryid != null">
+        #{productCategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="productCategoryname != null">
+        #{productCategoryname,jdbcType=INTEGER},
+      </if>
+      <if test="productMainimgurl != null">
+        #{productMainimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="productMainFuimgurl != null">
+        product_mainfuimgurl = #{productMainFuimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="productOriginalprice != null">
+        #{productOriginalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="productHavesalenum != null">
+        #{productHavesalenum,jdbcType=INTEGER},
+      </if>
+      <if test="productStatus != null">
+        #{productStatus,jdbcType=INTEGER},
+      </if>
+      <if test="productCreatetime != null">
+        #{productCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="productMotifytime != null">
+        #{productMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="productAdminId != null">
+        #{productAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="productAdminOperatorname != null">
+        #{productAdminOperatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable != null">
+        #{productLable,jdbcType=INTEGER},
+      </if>
+      <if test="productFirsth != null">
+        #{productFirsth,jdbcType=INTEGER},
+      </if>
+      <if test="productActoffid != null">
+        #{productActoffid,jdbcType=INTEGER},
+      </if>
+      <if test="productActoffoff != null">
+        #{productActoffoff,jdbcType=INTEGER},
+      </if>
+      <if test="productActoffIf != null">
+        product_actoffif = #{productActoffIf,jdbcType=INTEGER},
+      </if>
+      <if test="productReviewnum != null">
+        #{productReviewnum,jdbcType=INTEGER},
+      </if>
+      <if test="productDesc != null">
+        #{productDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="productCategoryIdsStr != null">
+        #{productCategoryIdsStr,jdbcType=VARCHAR},
+      </if>
+      <if test="productCategoryNamesStr != null">
+        #{productCategoryNamesStr,jdbcType=VARCHAR},
+      </if>
+      <if test="productMetaDesc != null">
+        #{productMetaDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="productMetaTitle != null">
+        #{productMetaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="productMetaKeyWords != null">
+        #{productMetaKeyWords,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- update使用中 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlbackProduct">
+    update tb_mlback_product
+    <set>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productColor != null">
+        product_color = #{productColor,jdbcType=VARCHAR},
+      </if>
+      <if test="productSeo != null">
+        product_seo = #{productSeo,jdbcType=VARCHAR},
+      </if>
+      <if test="productCategoryid != null">
+        product_categoryId = #{productCategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="productCategoryname != null">
+        product_categoryName = #{productCategoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="productMainimgurl != null">
+        product_mainimgurl = #{productMainimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="productMainFuimgurl != null">
+        product_mainfuimgurl = #{productMainFuimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="productOriginalprice != null">
+        product_originalPrice = #{productOriginalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="productHavesalenum != null">
+        product_haveSaleNum = #{productHavesalenum,jdbcType=INTEGER},
+      </if>
+      <if test="productStatus != null">
+        product_status = #{productStatus,jdbcType=INTEGER},
+      </if>
+      <if test="productCreatetime != null">
+        product_createTime = #{productCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="productMotifytime != null">
+        product_motifyTime = #{productMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="productAdminId != null">
+        product_admin_id = #{productAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="productAdminOperatorname != null">
+        product_admin_operatorName = #{productAdminOperatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="productLable != null">
+        product_lable = #{productLable,jdbcType=INTEGER},
+      </if>
+      <if test="productFirsth != null">
+        product_firsth = #{productFirsth,jdbcType=INTEGER},
+      </if>
+      <if test="productActoffid != null">
+        product_actoffId = #{productActoffid,jdbcType=INTEGER},
+      </if>
+      <if test="productActoffoff != null">
+        product_actoffOff = #{productActoffoff,jdbcType=INTEGER},
+      </if>
+      <if test="productActoffIf != null">
+		product_actoffif = #{productActoffIf,jdbcType=INTEGER},
+	  </if>
+      <if test="productReviewnum != null">
+        product_reviewNum = #{productReviewnum,jdbcType=INTEGER},
+      </if>
+      <if test="productDesc != null">
+        product_desc = #{productDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="productCategoryIdsStr != null">
+		product_category_idsStr = #{productCategoryIdsStr,jdbcType=VARCHAR},
+	  </if>
+	  <if test="productCategoryNamesStr != null">
+		product_category_namesStr = #{productCategoryNamesStr,jdbcType=VARCHAR},
+	  </if>
+	  <if test="productMetaDesc != null">
+		product_meta_desc = #{productMetaDesc,jdbcType=VARCHAR},
+	  </if>
+	  <if test="productMetaTitle != null">
+        product_meta_title = #{productMetaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="productMetaKeyWords != null">
+        product_meta_keyWords = #{productMetaKeyWords,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- update使用中 -->
+  <update id="updateMainFuImgById" parameterType="com.atguigu.bean.MlbackProduct">
+    update tb_mlback_product set
+        product_mainfuimgurl = #{productMainFuimgurl,jdbcType=VARCHAR}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  <!-- delete使用中 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_mlback_product
+    where product_id = #{productId,jdbcType=INTEGER}
+  </delete>
+  <!-- select使用中 -->
+  <select id="selectMlbackProductByLable" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+    select * from tb_mlback_product
+    where product_lable = #{productLable,jdbcType=INTEGER} order by product_firsth ,product_haveSaleNum desc
+  </select>
+  
+  <!-- select使用中 -->
+  <select id="selectMlbackProductByProductCategoryid" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+    select * from tb_mlback_product
+    where product_categoryId = #{productCategoryid,jdbcType=INTEGER}
+    <if test="productColor != null and productColor !=''">
+      and product_color = #{productColor,jdbcType=VARCHAR}
+    </if>
+     order by product_haveSaleNum desc
+  </select>
+  
+  <!-- select	ByStatus使用中 -->
+  <select id="selectMlbackProductByStatus" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+    select 
+	product_id, product_name,  product_status
+ 	from tb_mlback_product
+    where product_status = #{productStatus,jdbcType=INTEGER} order by product_id desc
+  </select>
+  
+  <!-- select	BySeo使用中 -->
+  <select id="selectMlbackProductBySeo" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+    select 
+	product_id, product_name,  product_seo ,product_meta_desc,product_meta_title,product_meta_keyWords
+ 	from tb_mlback_product
+    where product_seo = #{productSeo,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- select	ProductLike使用中 -->
+  <select id="selectMlbackProductLike" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+    select 	
+	product_id, product_name, product_seo,  product_mainimgurl, product_originalPrice, 
+    product_haveSaleNum, product_status, product_lable, product_firsth, product_actoffId, 
+    product_actoffOff, product_actoffif, product_reviewNum	
+	from tb_mlback_product
+    where product_name like concat(concat("%",#{productName}),"%") AND product_status = 1
+  </select>
+  
+  <select id="selectMlbackProductLikeNum" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+    select 
+	product_id from tb_mlback_product
+    where product_name like concat(concat("%",#{productName}),"%") AND product_status = 1
+  </select>
+  
+  <!-- select	ProductLike使用中 -->
+  <select id="selectMlbackProductbyCategorySeo" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+    select 	
+	product_id, product_name, product_seo,  product_mainimgurl, product_originalPrice, 
+    product_haveSaleNum, product_status, product_lable, product_firsth, product_actoffId, 
+    product_actoffOff, product_actoffif, product_reviewNum	
+	from tb_mlback_product
+    where product_id = #{productId,jdbcType=INTEGER} AND product_status = 1
+  </select>
+  
+  
+  <!-- select	selectMlbackProductSimple使用中 -->
+  <select id="selectMlbackProductSimple" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+    select 	
+	product_id, product_name,product_color, product_seo,  product_mainimgurl, product_mainfuimgurl, product_originalPrice, 
+    product_haveSaleNum, product_status,  product_actoffId, 
+    product_actoffOff, product_actoffif, product_reviewNum ,product_meta_desc,product_meta_title,product_meta_keyWords
+	from tb_mlback_product
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- selectHighMlbackProduct使用中 -->
+  <select id="selectHighMlbackProduct" parameterType="com.atguigu.bean.MlbackProduct" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_product
+    where product_name like concat(concat("%",#{productName}),"%") 
+      <if test="productStatus != null">
+       and product_status = #{productStatus,jdbcType=INTEGER}
+      </if>
+  </select>
+  
+</mapper>

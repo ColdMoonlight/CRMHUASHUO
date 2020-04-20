@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlbackProductSkuMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlbackProductSku">
+    <id column="productSku_id" jdbcType="INTEGER" property="productskuId" />
+    <result column="productSku_name" jdbcType="VARCHAR" property="productskuName" />
+    <result column="productSku_name_details" jdbcType="VARCHAR" property="productskuNameDetails" />
+    <result column="productSku_money_details" jdbcType="VARCHAR" property="productskuMoneyDetails" />
+    <result column="productSku_stock_details" jdbcType="VARCHAR" property="productskuStockDetails" />
+    <result column="productSku_imageurl_details" jdbcType="VARCHAR" property="productskuImageurlDetails" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="productSku_status" jdbcType="INTEGER" property="productskuStatus" />
+    <result column="productSku_admin_id" jdbcType="INTEGER" property="productskuAdminId" />
+    <result column="productSku_admin_operatorName" jdbcType="VARCHAR" property="productskuAdminOperatorname" />
+    <result column="productSku_createTime" jdbcType="VARCHAR" property="productskuCreatetime" />
+    <result column="productSku_motifyTime" jdbcType="VARCHAR" property="productskuMotifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    productSku_id, productSku_name, productSku_name_details, productSku_money_details, 
+    productSku_stock_details, productSku_imageurl_details, product_id, productSku_status, 
+    productSku_admin_id, productSku_admin_operatorName, productSku_createTime, productSku_motifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlbackProductSkuExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mlback_product_sku
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mlback_product_sku
+    where productSku_id = #{productskuId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlbackProductSkuExample">
+    delete from tb_mlback_product_sku
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlbackProductSku">
+    insert into tb_mlback_product_sku (productSku_id, productSku_name, productSku_name_details, 
+      productSku_money_details, productSku_stock_details, 
+      productSku_imageurl_details, product_id, productSku_status, 
+      productSku_admin_id, productSku_admin_operatorName, 
+      productSku_createTime, productSku_motifyTime
+      )
+    values (#{productskuId,jdbcType=INTEGER}, #{productskuName,jdbcType=VARCHAR}, #{productskuNameDetails,jdbcType=VARCHAR}, 
+      #{productskuMoneyDetails,jdbcType=VARCHAR}, #{productskuStockDetails,jdbcType=VARCHAR}, 
+      #{productskuImageurlDetails,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{productskuStatus,jdbcType=INTEGER}, 
+      #{productskuAdminId,jdbcType=INTEGER}, #{productskuAdminOperatorname,jdbcType=VARCHAR}, 
+      #{productskuCreatetime,jdbcType=VARCHAR}, #{productskuMotifytime,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlbackProductSkuExample" resultType="java.lang.Long">
+    select count(*) from tb_mlback_product_sku
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mlback_product_sku
+    <set>
+      <if test="record.productskuId != null">
+        productSku_id = #{record.productskuId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productskuName != null">
+        productSku_name = #{record.productskuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productskuNameDetails != null">
+        productSku_name_details = #{record.productskuNameDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productskuMoneyDetails != null">
+        productSku_money_details = #{record.productskuMoneyDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productskuStockDetails != null">
+        productSku_stock_details = #{record.productskuStockDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productskuImageurlDetails != null">
+        productSku_imageurl_details = #{record.productskuImageurlDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productskuStatus != null">
+        productSku_status = #{record.productskuStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.productskuAdminId != null">
+        productSku_admin_id = #{record.productskuAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productskuAdminOperatorname != null">
+        productSku_admin_operatorName = #{record.productskuAdminOperatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productskuCreatetime != null">
+        productSku_createTime = #{record.productskuCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productskuMotifytime != null">
+        productSku_motifyTime = #{record.productskuMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mlback_product_sku
+    set productSku_id = #{record.productskuId,jdbcType=INTEGER},
+      productSku_name = #{record.productskuName,jdbcType=VARCHAR},
+      productSku_name_details = #{record.productskuNameDetails,jdbcType=VARCHAR},
+      productSku_money_details = #{record.productskuMoneyDetails,jdbcType=VARCHAR},
+      productSku_stock_details = #{record.productskuStockDetails,jdbcType=VARCHAR},
+      productSku_imageurl_details = #{record.productskuImageurlDetails,jdbcType=VARCHAR},
+      product_id = #{record.productId,jdbcType=INTEGER},
+      productSku_status = #{record.productskuStatus,jdbcType=INTEGER},
+      productSku_admin_id = #{record.productskuAdminId,jdbcType=INTEGER},
+      productSku_admin_operatorName = #{record.productskuAdminOperatorname,jdbcType=VARCHAR},
+      productSku_createTime = #{record.productskuCreatetime,jdbcType=VARCHAR},
+      productSku_motifyTime = #{record.productskuMotifytime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlbackProductSku">
+    update tb_mlback_product_sku
+    set productSku_name = #{productskuName,jdbcType=VARCHAR},
+      productSku_name_details = #{productskuNameDetails,jdbcType=VARCHAR},
+      productSku_money_details = #{productskuMoneyDetails,jdbcType=VARCHAR},
+      productSku_stock_details = #{productskuStockDetails,jdbcType=VARCHAR},
+      productSku_imageurl_details = #{productskuImageurlDetails,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=INTEGER},
+      productSku_status = #{productskuStatus,jdbcType=INTEGER},
+      productSku_admin_id = #{productskuAdminId,jdbcType=INTEGER},
+      productSku_admin_operatorName = #{productskuAdminOperatorname,jdbcType=VARCHAR},
+      productSku_createTime = #{productskuCreatetime,jdbcType=VARCHAR},
+      productSku_motifyTime = #{productskuMotifytime,jdbcType=VARCHAR}
+    where productSku_id = #{productskuId,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  <!-- insert使用中 -->
+  <insert id="insertSelective" parameterType="com.atguigu.bean.MlbackProductSku">
+    insert into tb_mlback_product_sku
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productskuId != null">
+        productSku_id,
+      </if>
+      <if test="productskuName != null">
+        productSku_name,
+      </if>
+      <if test="productskuNameDetails != null">
+        productSku_name_details,
+      </if>
+      <if test="productskuMoneyDetails != null">
+        productSku_money_details,
+      </if>
+      <if test="productskuStockDetails != null">
+        productSku_stock_details,
+      </if>
+      <if test="productskuImageurlDetails != null">
+        productSku_imageurl_details,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productskuStatus != null">
+        productSku_status,
+      </if>
+      <if test="productskuAdminId != null">
+        productSku_admin_id,
+      </if>
+      <if test="productskuAdminOperatorname != null">
+        productSku_admin_operatorName,
+      </if>
+      <if test="productskuCreatetime != null">
+        productSku_createTime,
+      </if>
+      <if test="productskuMotifytime != null">
+        productSku_motifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productskuId != null">
+        #{productskuId,jdbcType=INTEGER},
+      </if>
+      <if test="productskuName != null">
+        #{productskuName,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuNameDetails != null">
+        #{productskuNameDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuMoneyDetails != null">
+        #{productskuMoneyDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuStockDetails != null">
+        #{productskuStockDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuImageurlDetails != null">
+        #{productskuImageurlDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productskuStatus != null">
+        #{productskuStatus,jdbcType=INTEGER},
+      </if>
+      <if test="productskuAdminId != null">
+        #{productskuAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="productskuAdminOperatorname != null">
+        #{productskuAdminOperatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuCreatetime != null">
+        #{productskuCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuMotifytime != null">
+        #{productskuMotifytime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- delete使用中 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_mlback_product_sku
+    where productSku_id = #{productskuId,jdbcType=INTEGER}
+  </delete>
+  <!-- update使用中 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlbackProductSku">
+    update tb_mlback_product_sku
+    <set>
+      <if test="productskuName != null">
+        productSku_name = #{productskuName,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuNameDetails != null">
+        productSku_name_details = #{productskuNameDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuMoneyDetails != null">
+        productSku_money_details = #{productskuMoneyDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuStockDetails != null">
+        productSku_stock_details = #{productskuStockDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuImageurlDetails != null">
+        productSku_imageurl_details = #{productskuImageurlDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productskuStatus != null">
+        productSku_status = #{productskuStatus,jdbcType=INTEGER},
+      </if>
+      <if test="productskuAdminId != null">
+        productSku_admin_id = #{productskuAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="productskuAdminOperatorname != null">
+        productSku_admin_operatorName = #{productskuAdminOperatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuCreatetime != null">
+        productSku_createTime = #{productskuCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="productskuMotifytime != null">
+        productSku_motifyTime = #{productskuMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where productSku_id = #{productskuId,jdbcType=INTEGER}
+  </update>
+  <!-- selectOne使用中 -->
+  <select id="selectMlbackProductSkuByProductId" parameterType="com.atguigu.bean.MlbackProductSku" resultMap="BaseResultMap">
+  select *
+    from tb_mlback_product_sku 
+    where product_id = #{productId,jdbcType=INTEGER} order by productSku_id 
+  </select>
+  <!-- selectOne使用中 -->
+  <select id="selectMlbackProductSkuByProductIdAndStatus" parameterType="com.atguigu.bean.MlbackProductSku" resultMap="BaseResultMap">
+  select *
+    from tb_mlback_product_sku 
+    where product_id = #{productId,jdbcType=INTEGER} and productSku_status = #{productskuStatus,jdbcType=INTEGER} order by productSku_id 
+  </select>
+  <!-- selectAll使用中 -->
+  <select id="selectMlbackProductGetAll" parameterType="com.atguigu.bean.MlbackProductSku" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_product_sku order by productSku_id desc
+  </select>
+</mapper>

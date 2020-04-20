@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlPaypalStateprovinceMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlPaypalStateprovince">
+    <id column="stateprovince_id" jdbcType="INTEGER" property="stateprovinceId" />
+    <result column="stateprovince_name_code" jdbcType="VARCHAR" property="stateprovinceNameCode" />
+    <result column="stateprovince_name" jdbcType="VARCHAR" property="stateprovinceName" />
+    <result column="stateprovince_country_code" jdbcType="VARCHAR" property="stateprovinceCountryCode" />
+    <result column="stateprovince_country" jdbcType="VARCHAR" property="stateprovinceCountry" />
+    <result column="stateprovince_createTime" jdbcType="VARCHAR" property="stateprovinceCreatetime" />
+    <result column="stateprovince_motifyTime" jdbcType="VARCHAR" property="stateprovinceMotifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    stateprovince_id, stateprovince_name_code, stateprovince_name, stateprovince_country_code, 
+    stateprovince_country, stateprovince_createTime, stateprovince_motifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlPaypalStateprovinceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_paypal_stateprovince
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_paypal_stateprovince
+    where stateprovince_id = #{stateprovinceId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlPaypalStateprovinceExample">
+    delete from tb_paypal_stateprovince
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlPaypalStateprovince">
+    insert into tb_paypal_stateprovince (stateprovince_id, stateprovince_name_code, 
+      stateprovince_name, stateprovince_country_code, 
+      stateprovince_country, stateprovince_createTime, 
+      stateprovince_motifyTime)
+    values (#{stateprovinceId,jdbcType=INTEGER}, #{stateprovinceNameCode,jdbcType=VARCHAR}, 
+      #{stateprovinceName,jdbcType=VARCHAR}, #{stateprovinceCountryCode,jdbcType=VARCHAR}, 
+      #{stateprovinceCountry,jdbcType=VARCHAR}, #{stateprovinceCreatetime,jdbcType=VARCHAR}, 
+      #{stateprovinceMotifytime,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlPaypalStateprovinceExample" resultType="java.lang.Long">
+    select count(*) from tb_paypal_stateprovince
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_paypal_stateprovince
+    <set>
+      <if test="record.stateprovinceId != null">
+        stateprovince_id = #{record.stateprovinceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stateprovinceNameCode != null">
+        stateprovince_name_code = #{record.stateprovinceNameCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stateprovinceName != null">
+        stateprovince_name = #{record.stateprovinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stateprovinceCountryCode != null">
+        stateprovince_country_code = #{record.stateprovinceCountryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stateprovinceCountry != null">
+        stateprovince_country = #{record.stateprovinceCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stateprovinceCreatetime != null">
+        stateprovince_createTime = #{record.stateprovinceCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stateprovinceMotifytime != null">
+        stateprovince_motifyTime = #{record.stateprovinceMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_paypal_stateprovince
+    set stateprovince_id = #{record.stateprovinceId,jdbcType=INTEGER},
+      stateprovince_name_code = #{record.stateprovinceNameCode,jdbcType=VARCHAR},
+      stateprovince_name = #{record.stateprovinceName,jdbcType=VARCHAR},
+      stateprovince_country_code = #{record.stateprovinceCountryCode,jdbcType=VARCHAR},
+      stateprovince_country = #{record.stateprovinceCountry,jdbcType=VARCHAR},
+      stateprovince_createTime = #{record.stateprovinceCreatetime,jdbcType=VARCHAR},
+      stateprovince_motifyTime = #{record.stateprovinceMotifytime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlPaypalStateprovince">
+    update tb_paypal_stateprovince
+    set stateprovince_name_code = #{stateprovinceNameCode,jdbcType=VARCHAR},
+      stateprovince_name = #{stateprovinceName,jdbcType=VARCHAR},
+      stateprovince_country_code = #{stateprovinceCountryCode,jdbcType=VARCHAR},
+      stateprovince_country = #{stateprovinceCountry,jdbcType=VARCHAR},
+      stateprovince_createTime = #{stateprovinceCreatetime,jdbcType=VARCHAR},
+      stateprovince_motifyTime = #{stateprovinceMotifytime,jdbcType=VARCHAR}
+    where stateprovince_id = #{stateprovinceId,jdbcType=INTEGER}
+  </update>
+  
+  <!--insertSelective-->
+  <insert id="insertSelective" parameterType="com.atguigu.bean.MlPaypalStateprovince">
+    insert into tb_paypal_stateprovince
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stateprovinceId != null">
+        stateprovince_id,
+      </if>
+      <if test="stateprovinceNameCode != null">
+        stateprovince_name_code,
+      </if>
+      <if test="stateprovinceName != null">
+        stateprovince_name,
+      </if>
+      <if test="stateprovinceCountryCode != null">
+        stateprovince_country_code,
+      </if>
+      <if test="stateprovinceCountry != null">
+        stateprovince_country,
+      </if>
+      <if test="stateprovinceCreatetime != null">
+        stateprovince_createTime,
+      </if>
+      <if test="stateprovinceMotifytime != null">
+        stateprovince_motifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stateprovinceId != null">
+        #{stateprovinceId,jdbcType=INTEGER},
+      </if>
+      <if test="stateprovinceNameCode != null">
+        #{stateprovinceNameCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stateprovinceName != null">
+        #{stateprovinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="stateprovinceCountryCode != null">
+        #{stateprovinceCountryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stateprovinceCountry != null">
+        #{stateprovinceCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="stateprovinceCreatetime != null">
+        #{stateprovinceCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="stateprovinceMotifytime != null">
+        #{stateprovinceMotifytime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!--deleteByPrimaryKey-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_paypal_stateprovince
+    where stateprovince_id = #{stateprovinceId,jdbcType=INTEGER}
+  </delete>
+  <!--updateByPrimaryKeySelective-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlPaypalStateprovince">
+    update tb_paypal_stateprovince
+    <set>
+      <if test="stateprovinceNameCode != null">
+        stateprovince_name_code = #{stateprovinceNameCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stateprovinceName != null">
+        stateprovince_name = #{stateprovinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="stateprovinceCountryCode != null">
+        stateprovince_country_code = #{stateprovinceCountryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stateprovinceCountry != null">
+        stateprovince_country = #{stateprovinceCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="stateprovinceCreatetime != null">
+        stateprovince_createTime = #{stateprovinceCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="stateprovinceMotifytime != null">
+        stateprovince_motifyTime = #{stateprovinceMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where stateprovince_id = #{stateprovinceId,jdbcType=INTEGER}
+  </update>
+  <!--selectMlPaypalStateprovinceByCountryCode-->
+  <select id="selectMlPaypalStateprovinceByCountryCode" parameterType="com.atguigu.bean.MlPaypalStateprovince" resultMap="BaseResultMap">
+    select stateprovince_name
+    from tb_paypal_stateprovince  where stateprovince_country_code = #{stateprovinceCountryCode,jdbcType=VARCHAR} order by stateprovince_name ASC
+  </select>
+  <!--selectMlPaypalStateprovinceByCountryCodeAndProvince-->
+  <select id="selectMlPaypalStateprovinceByCountryCodeAndProvince" parameterType="com.atguigu.bean.MlPaypalStateprovince" resultMap="BaseResultMap">
+    select stateprovince_id, stateprovince_name_code, stateprovince_name, stateprovince_country_code, stateprovince_country
+    from tb_paypal_stateprovince  where stateprovince_country_code = #{stateprovinceCountryCode,jdbcType=VARCHAR} and stateprovince_name = #{stateprovinceName,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

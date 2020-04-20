@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.ImgCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.ImgCategory">
+    <id column="img_category_id" jdbcType="INTEGER" property="imgCategoryId" />
+    <result column="img_category_name" jdbcType="VARCHAR" property="imgCategoryName" />
+    <result column="img_category_parent_id" jdbcType="INTEGER" property="imgCategoryParentId" />
+    <result column="img_category_parent_name" jdbcType="VARCHAR" property="imgCategoryParentName" />
+    <result column="img_category_seo" jdbcType="VARCHAR" property="imgCategorySeo" />
+    <result column="img_category_sort_order" jdbcType="INTEGER" property="imgCategorySortOrder" />
+    <result column="img_category_createTime" jdbcType="VARCHAR" property="imgCategoryCreatetime" />
+    <result column="img_category_motifyTime" jdbcType="VARCHAR" property="imgCategoryMotifytime" />
+    <result column="img_category_desc" jdbcType="VARCHAR" property="imgCategoryDesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    img_category_id, img_category_name, img_category_parent_id, img_category_parent_name, 
+    img_category_seo, img_category_sort_order, img_category_createTime, img_category_motifyTime, 
+    img_category_desc
+  </sql>
+  <select id="selectByExample" parameterType="com.atguigu.bean.ImgCategoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tw_img_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.ImgCategoryExample">
+    delete from tw_img_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.ImgCategory">
+    insert into tw_img_category (img_category_id, img_category_name, img_category_parent_id, 
+      img_category_parent_name, img_category_seo, 
+      img_category_sort_order, img_category_createTime, 
+      img_category_motifyTime, img_category_desc)
+    values (#{imgCategoryId,jdbcType=INTEGER}, #{imgCategoryName,jdbcType=VARCHAR}, #{imgCategoryParentId,jdbcType=INTEGER}, 
+      #{imgCategoryParentName,jdbcType=VARCHAR}, #{imgCategorySeo,jdbcType=VARCHAR}, 
+      #{imgCategorySortOrder,jdbcType=INTEGER}, #{imgCategoryCreatetime,jdbcType=VARCHAR}, 
+      #{imgCategoryMotifytime,jdbcType=VARCHAR}, #{imgCategoryDesc,jdbcType=VARCHAR})
+  </insert>
+  <select id="countByExample" parameterType="com.atguigu.bean.ImgCategoryExample" resultType="java.lang.Long">
+    select count(*) from tw_img_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tw_img_category
+    <set>
+      <if test="record.imgCategoryId != null">
+        img_category_id = #{record.imgCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.imgCategoryName != null">
+        img_category_name = #{record.imgCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgCategoryParentId != null">
+        img_category_parent_id = #{record.imgCategoryParentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.imgCategoryParentName != null">
+        img_category_parent_name = #{record.imgCategoryParentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgCategorySeo != null">
+        img_category_seo = #{record.imgCategorySeo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgCategorySortOrder != null">
+        img_category_sort_order = #{record.imgCategorySortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.imgCategoryCreatetime != null">
+        img_category_createTime = #{record.imgCategoryCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgCategoryMotifytime != null">
+        img_category_motifyTime = #{record.imgCategoryMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgCategoryDesc != null">
+        img_category_desc = #{record.imgCategoryDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tw_img_category
+    set img_category_id = #{record.imgCategoryId,jdbcType=INTEGER},
+      img_category_name = #{record.imgCategoryName,jdbcType=VARCHAR},
+      img_category_parent_id = #{record.imgCategoryParentId,jdbcType=INTEGER},
+      img_category_parent_name = #{record.imgCategoryParentName,jdbcType=VARCHAR},
+      img_category_seo = #{record.imgCategorySeo,jdbcType=VARCHAR},
+      img_category_sort_order = #{record.imgCategorySortOrder,jdbcType=INTEGER},
+      img_category_createTime = #{record.imgCategoryCreatetime,jdbcType=VARCHAR},
+      img_category_motifyTime = #{record.imgCategoryMotifytime,jdbcType=VARCHAR},
+      img_category_desc = #{record.imgCategoryDesc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.ImgCategory">
+    update tw_img_category
+    set img_category_name = #{imgCategoryName,jdbcType=VARCHAR},
+      img_category_parent_id = #{imgCategoryParentId,jdbcType=INTEGER},
+      img_category_parent_name = #{imgCategoryParentName,jdbcType=VARCHAR},
+      img_category_seo = #{imgCategorySeo,jdbcType=VARCHAR},
+      img_category_sort_order = #{imgCategorySortOrder,jdbcType=INTEGER},
+      img_category_createTime = #{imgCategoryCreatetime,jdbcType=VARCHAR},
+      img_category_motifyTime = #{imgCategoryMotifytime,jdbcType=VARCHAR},
+      img_category_desc = #{imgCategoryDesc,jdbcType=VARCHAR}
+    where img_category_id = #{imgCategoryId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- insertSelective -->
+  <insert id="insertSelective" parameterType="com.atguigu.bean.ImgCategory">
+    insert into tw_img_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="imgCategoryId != null">
+        img_category_id,
+      </if>
+      <if test="imgCategoryName != null">
+        img_category_name,
+      </if>
+      <if test="imgCategoryParentId != null">
+        img_category_parent_id,
+      </if>
+      <if test="imgCategoryParentName != null">
+        img_category_parent_name,
+      </if>
+      <if test="imgCategorySeo != null">
+        img_category_seo,
+      </if>
+      <if test="imgCategorySortOrder != null">
+        img_category_sort_order,
+      </if>
+      <if test="imgCategoryCreatetime != null">
+        img_category_createTime,
+      </if>
+      <if test="imgCategoryMotifytime != null">
+        img_category_motifyTime,
+      </if>
+      <if test="imgCategoryDesc != null">
+        img_category_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="imgCategoryId != null">
+        #{imgCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="imgCategoryName != null">
+        #{imgCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgCategoryParentId != null">
+        #{imgCategoryParentId,jdbcType=INTEGER},
+      </if>
+      <if test="imgCategoryParentName != null">
+        #{imgCategoryParentName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgCategorySeo != null">
+        #{imgCategorySeo,jdbcType=VARCHAR},
+      </if>
+      <if test="imgCategorySortOrder != null">
+        #{imgCategorySortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="imgCategoryCreatetime != null">
+        #{imgCategoryCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="imgCategoryMotifytime != null">
+        #{imgCategoryMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="imgCategoryDesc != null">
+        #{imgCategoryDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- deleteByPrimaryKey -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tw_img_category
+    where img_category_id = #{imgCategoryId,jdbcType=INTEGER}
+  </delete>
+  <!-- updateByPrimaryKeySelective -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.ImgCategory">
+    update tw_img_category
+    <set>
+      <if test="imgCategoryName != null">
+        img_category_name = #{imgCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgCategoryParentId != null">
+        img_category_parent_id = #{imgCategoryParentId,jdbcType=INTEGER},
+      </if>
+      <if test="imgCategoryParentName != null">
+        img_category_parent_name = #{imgCategoryParentName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgCategorySeo != null">
+        img_category_seo = #{imgCategorySeo,jdbcType=VARCHAR},
+      </if>
+      <if test="imgCategorySortOrder != null">
+        img_category_sort_order = #{imgCategorySortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="imgCategoryCreatetime != null">
+        img_category_createTime = #{imgCategoryCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="imgCategoryMotifytime != null">
+        img_category_motifyTime = #{imgCategoryMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="imgCategoryDesc != null">
+        img_category_desc = #{imgCategoryDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where img_category_id = #{imgCategoryId,jdbcType=INTEGER}
+  </update>
+  <!-- selectByPrimaryKey -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tw_img_category
+    where img_category_id = #{imgCategoryId,jdbcType=INTEGER}
+  </select>
+  <!-- deleteByPrimaryKey -->
+  <select id="selectImgCategoryGetAll" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * 
+    from tw_img_category order by img_category_sort_order desc
+  </select>
+  <!-- selectImgCategoryByParentId -->
+  <select id="selectImgCategoryByParentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select img_category_id,img_category_name,img_category_seo,img_category_parent_id,img_category_desc
+    from tw_img_category order by img_category_parent_id,img_category_id
+  </select>
+</mapper>

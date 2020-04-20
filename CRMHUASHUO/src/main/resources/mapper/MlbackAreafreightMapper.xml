@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlbackAreafreightMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlbackAreafreight">
+    <id column="areafreight_id" jdbcType="INTEGER" property="areafreightId" />
+    <result column="areafreight_country_English" jdbcType="VARCHAR" property="areafreightCountryEnglish" />
+    <result column="areafreight_country" jdbcType="VARCHAR" property="areafreightCountry" />
+    <result column="areafreight_price" jdbcType="INTEGER" property="areafreightPrice" />
+    <result column="areafreight_createTime" jdbcType="VARCHAR" property="areafreightCreatetime" />
+    <result column="areafreight_motifyTime" jdbcType="VARCHAR" property="areafreightMotifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    areafreight_id, areafreight_country_English, areafreight_country, areafreight_price, 
+    areafreight_createTime, areafreight_motifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlbackAreafreightExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mlback_areafreight
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mlback_areafreight
+    where areafreight_id = #{areafreightId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlbackAreafreightExample">
+    delete from tb_mlback_areafreight
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlbackAreafreight">
+    insert into tb_mlback_areafreight (areafreight_id, areafreight_country_English, 
+      areafreight_country, areafreight_price, areafreight_createTime, 
+      areafreight_motifyTime)
+    values (#{areafreightId,jdbcType=INTEGER}, #{areafreightCountryEnglish,jdbcType=VARCHAR}, 
+      #{areafreightCountry,jdbcType=VARCHAR}, #{areafreightPrice,jdbcType=INTEGER}, #{areafreightCreatetime,jdbcType=VARCHAR}, 
+      #{areafreightMotifytime,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlbackAreafreightExample" resultType="java.lang.Long">
+    select count(*) from tb_mlback_areafreight
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mlback_areafreight
+    <set>
+      <if test="record.areafreightId != null">
+        areafreight_id = #{record.areafreightId,jdbcType=INTEGER},
+      </if>
+      <if test="record.areafreightCountryEnglish != null">
+        areafreight_country_English = #{record.areafreightCountryEnglish,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areafreightCountry != null">
+        areafreight_country = #{record.areafreightCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areafreightPrice != null">
+        areafreight_price = #{record.areafreightPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.areafreightCreatetime != null">
+        areafreight_createTime = #{record.areafreightCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areafreightMotifytime != null">
+        areafreight_motifyTime = #{record.areafreightMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mlback_areafreight
+    set areafreight_id = #{record.areafreightId,jdbcType=INTEGER},
+      areafreight_country_English = #{record.areafreightCountryEnglish,jdbcType=VARCHAR},
+      areafreight_country = #{record.areafreightCountry,jdbcType=VARCHAR},
+      areafreight_price = #{record.areafreightPrice,jdbcType=INTEGER},
+      areafreight_createTime = #{record.areafreightCreatetime,jdbcType=VARCHAR},
+      areafreight_motifyTime = #{record.areafreightMotifytime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlbackAreafreight">
+    update tb_mlback_areafreight
+    set areafreight_country_English = #{areafreightCountryEnglish,jdbcType=VARCHAR},
+      areafreight_country = #{areafreightCountry,jdbcType=VARCHAR},
+      areafreight_price = #{areafreightPrice,jdbcType=INTEGER},
+      areafreight_createTime = #{areafreightCreatetime,jdbcType=VARCHAR},
+      areafreight_motifyTime = #{areafreightMotifytime,jdbcType=VARCHAR}
+    where areafreight_id = #{areafreightId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- insert -->
+  <insert id="insertSelective" parameterType="com.atguigu.bean.MlbackAreafreight">
+    insert into tb_mlback_areafreight
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="areafreightId != null">
+        areafreight_id,
+      </if>
+      <if test="areafreightCountryEnglish != null">
+        areafreight_country_English,
+      </if>
+      <if test="areafreightCountry != null">
+        areafreight_country,
+      </if>
+      <if test="areafreightPrice != null">
+        areafreight_price,
+      </if>
+      <if test="areafreightCreatetime != null">
+        areafreight_createTime,
+      </if>
+      <if test="areafreightMotifytime != null">
+        areafreight_motifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="areafreightId != null">
+        #{areafreightId,jdbcType=INTEGER},
+      </if>
+      <if test="areafreightCountryEnglish != null">
+        #{areafreightCountryEnglish,jdbcType=VARCHAR},
+      </if>
+      <if test="areafreightCountry != null">
+        #{areafreightCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="areafreightPrice != null">
+        #{areafreightPrice,jdbcType=INTEGER},
+      </if>
+      <if test="areafreightCreatetime != null">
+        #{areafreightCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="areafreightMotifytime != null">
+        #{areafreightMotifytime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- delete -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_mlback_areafreight
+    where areafreight_id = #{areafreightId,jdbcType=INTEGER}
+  </delete>
+  <!-- update -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlbackAreafreight">
+    update tb_mlback_areafreight
+    <set>
+      <if test="areafreightCountryEnglish != null">
+        areafreight_country_English = #{areafreightCountryEnglish,jdbcType=VARCHAR},
+      </if>
+      <if test="areafreightCountry != null">
+        areafreight_country = #{areafreightCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="areafreightPrice != null">
+        areafreight_price = #{areafreightPrice,jdbcType=INTEGER},
+      </if>
+      <if test="areafreightCreatetime != null">
+        areafreight_createTime = #{areafreightCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="areafreightMotifytime != null">
+        areafreight_motifyTime = #{areafreightMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where areafreight_id = #{areafreightId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- selectOneBy使用中CountryEnglish -->
+  <select id="selectMlbackAreafreightByAreafreightCountryEnglish" parameterType="com.atguigu.bean.MlbackAreafreight" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_areafreight 
+    where areafreight_country_English = #{areafreightCountryEnglish,jdbcType=VARCHAR}
+  </select>
+  <!-- selectOneBy使用中CountryEnglish -->
+  <select id="selectMlbackAreafreightById" parameterType="com.atguigu.bean.MlbackAreafreight" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_areafreight 
+    where areafreight_id = #{areafreightId,jdbcType=INTEGER}
+  </select>
+  <!-- selectOneBy使用中CountryEnglish -->
+  <select id="selectMlbackAreafreightByEng" parameterType="com.atguigu.bean.MlbackAreafreight" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_areafreight 
+    where areafreight_country_English = #{areafreightCountryEnglish,jdbcType=VARCHAR}
+  </select>
+  <!-- selectAll使用中 -->
+  <select id="selectMlbackAreafreightGetAll" parameterType="com.atguigu.bean.MlbackAreafreight" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_areafreight order by areafreight_id desc
+  </select>
+  
+</mapper>

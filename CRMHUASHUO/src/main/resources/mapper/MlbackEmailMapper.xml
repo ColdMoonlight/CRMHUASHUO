@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlbackEmailMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlbackEmail">
+    <id column="email_id" jdbcType="INTEGER" property="emailId" />
+    <result column="email_name" jdbcType="VARCHAR" property="emailName" />
+    <result column="email_status" jdbcType="VARCHAR" property="emailStatus" />
+    <result column="email_createTime" jdbcType="VARCHAR" property="emailCreatetime" />
+    <result column="email_motifyTime" jdbcType="VARCHAR" property="emailMotifytime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.atguigu.bean.MlbackEmail">
+    <result column="email_content" jdbcType="LONGVARCHAR" property="emailContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    email_id, email_name, email_status, email_createTime, email_motifyTime
+  </sql>
+  <sql id="Blob_Column_List">
+    email_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.atguigu.bean.MlbackEmailExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_mlback_email
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlbackEmailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mlback_email
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_mlback_email
+    where email_id = #{emailId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlbackEmailExample">
+    delete from tb_mlback_email
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlbackEmail">
+    insert into tb_mlback_email (email_id, email_name, email_status, 
+      email_createTime, email_motifyTime, email_content
+      )
+    values (#{emailId,jdbcType=INTEGER}, #{emailName,jdbcType=VARCHAR}, #{emailStatus,jdbcType=VARCHAR}, 
+      #{emailCreatetime,jdbcType=VARCHAR}, #{emailMotifytime,jdbcType=VARCHAR}, #{emailContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlbackEmailExample" resultType="java.lang.Long">
+    select count(*) from tb_mlback_email
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mlback_email
+    <set>
+      <if test="record.emailId != null">
+        email_id = #{record.emailId,jdbcType=INTEGER},
+      </if>
+      <if test="record.emailName != null">
+        email_name = #{record.emailName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailStatus != null">
+        email_status = #{record.emailStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailCreatetime != null">
+        email_createTime = #{record.emailCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailMotifytime != null">
+        email_motifyTime = #{record.emailMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailContent != null">
+        email_content = #{record.emailContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tb_mlback_email
+    set email_id = #{record.emailId,jdbcType=INTEGER},
+      email_name = #{record.emailName,jdbcType=VARCHAR},
+      email_status = #{record.emailStatus,jdbcType=VARCHAR},
+      email_createTime = #{record.emailCreatetime,jdbcType=VARCHAR},
+      email_motifyTime = #{record.emailMotifytime,jdbcType=VARCHAR},
+      email_content = #{record.emailContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mlback_email
+    set email_id = #{record.emailId,jdbcType=INTEGER},
+      email_name = #{record.emailName,jdbcType=VARCHAR},
+      email_status = #{record.emailStatus,jdbcType=VARCHAR},
+      email_createTime = #{record.emailCreatetime,jdbcType=VARCHAR},
+      email_motifyTime = #{record.emailMotifytime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.atguigu.bean.MlbackEmail">
+    update tb_mlback_email
+    set email_name = #{emailName,jdbcType=VARCHAR},
+      email_status = #{emailStatus,jdbcType=VARCHAR},
+      email_createTime = #{emailCreatetime,jdbcType=VARCHAR},
+      email_motifyTime = #{emailMotifytime,jdbcType=VARCHAR},
+      email_content = #{emailContent,jdbcType=LONGVARCHAR}
+    where email_id = #{emailId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlbackEmail">
+    update tb_mlback_email
+    set email_name = #{emailName,jdbcType=VARCHAR},
+      email_status = #{emailStatus,jdbcType=VARCHAR},
+      email_createTime = #{emailCreatetime,jdbcType=VARCHAR},
+      email_motifyTime = #{emailMotifytime,jdbcType=VARCHAR}
+    where email_id = #{emailId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- insertOne -->
+  <insert id="insertSelective" parameterType="com.atguigu.bean.MlbackEmail">
+    insert into tb_mlback_email
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="emailId != null">
+        email_id,
+      </if>
+      <if test="emailName != null">
+        email_name,
+      </if>
+      <if test="emailStatus != null">
+        email_status,
+      </if>
+      <if test="emailCreatetime != null">
+        email_createTime,
+      </if>
+      <if test="emailMotifytime != null">
+        email_motifyTime,
+      </if>
+      <if test="emailContent != null">
+        email_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="emailId != null">
+        #{emailId,jdbcType=INTEGER},
+      </if>
+      <if test="emailName != null">
+        #{emailName,jdbcType=VARCHAR},
+      </if>
+      <if test="emailStatus != null">
+        #{emailStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="emailCreatetime != null">
+        #{emailCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="emailMotifytime != null">
+        #{emailMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="emailContent != null">
+        #{emailContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- deleteByPrimaryKey -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_mlback_email
+    where email_id = #{emailId,jdbcType=INTEGER}
+  </delete>
+  
+  <!-- updateByPrimaryKeySelective -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlbackEmail">
+    update tb_mlback_email
+    <set>
+      <if test="emailName != null">
+        email_name = #{emailName,jdbcType=VARCHAR},
+      </if>
+      <if test="emailStatus != null">
+        email_status = #{emailStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="emailCreatetime != null">
+        email_createTime = #{emailCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="emailMotifytime != null">
+        email_motifyTime = #{emailMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="emailContent != null">
+        email_content = #{emailContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where email_id = #{emailId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- selectMlbackEmailById -->
+  <select id="selectMlbackEmailById" parameterType="com.atguigu.bean.MlbackEmail"  resultMap="BaseResultMap">
+    select *
+    from tb_mlback_email
+    where email_id = #{emailId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- selectMlbackEmailGetAll -->
+   <select id="selectMlbackEmailGetAll" parameterType="com.atguigu.bean.MlbackEmail"  resultMap="BaseResultMap">
+   select *
+   from tb_mlback_email order by email_id desc
+   </select>
+  <!-- selectMlbackEmailGetAllEmpt -->
+  <select id="selectMlbackEmailGetAllEmpt" parameterType="com.atguigu.bean.MlbackEmail" resultMap="BaseResultMap">
+    select email_id, email_name, email_status, email_createTime, email_motifyTime
+    from tb_mlback_email order by email_id desc
+  </select> 
+
+</mapper>

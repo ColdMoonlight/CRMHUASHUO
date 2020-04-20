@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlbackCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlbackCategory">
+    <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="category_imgurl" jdbcType="VARCHAR" property="categoryImgurl" />
+    <result column="category_parent_id" jdbcType="INTEGER" property="categoryParentId" />
+    <result column="category_parent_name" jdbcType="VARCHAR" property="categoryParentName" />
+    <result column="category_status" jdbcType="INTEGER" property="categoryStatus" />
+    <result column="category_lable" jdbcType="INTEGER" property="categoryLable" />
+    <result column="category_seo" jdbcType="VARCHAR" property="categorySeo" />
+    <result column="category_sort_order" jdbcType="INTEGER" property="categorySortOrder" />
+    <result column="category_admin_id" jdbcType="INTEGER" property="categoryAdminId" />
+    <result column="category_admin_operaterName" jdbcType="VARCHAR" property="categoryAdminOperatername" />
+    <result column="category_createTime" jdbcType="TIMESTAMP" property="categoryCreatetime" />
+    <result column="category_motifyTime" jdbcType="TIMESTAMP" property="categoryMotifytime" />
+    <result column="category_desc" jdbcType="VARCHAR" property="categoryDesc" />
+    <result column="category_product_ids" jdbcType="VARCHAR" property="categoryProductIds" />
+    <result column="category_product_names" jdbcType="VARCHAR" property="categoryProductNames" />
+    <result column="category_imgpcurl" jdbcType="VARCHAR" property="categoryImgPcurl" />
+    <result column="category_metaTitle" jdbcType="VARCHAR" property="categoryMetaTitle" />
+    <result column="category_metaKeyWords" jdbcType="VARCHAR" property="categoryMetaKeyWords" />
+    <result column="category_metaDesc" jdbcType="VARCHAR" property="categoryMetaDesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    category_id, category_name, category_imgurl, category_parent_id, category_parent_name, 
+    category_status, category_lable, category_seo, category_sort_order, category_admin_id, category_admin_operaterName, 
+    category_createTime, category_motifyTime, category_desc,category_product_ids,category_product_names,category_imgpcurl
+    ,category_metaTitle,category_metaKeyWords,category_metaDesc
+  </sql>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlbackCategoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mlback_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mlback_category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlbackCategoryExample">
+    delete from tb_mlback_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlbackCategory">
+    insert into tb_mlback_category (category_id, category_name, category_imgurl, 
+      category_parent_id, category_parent_name, category_status, category_lable, 
+      category_seo, category_sort_order, category_admin_id, 
+      category_admin_operaterName, category_createTime, 
+      category_motifyTime, category_desc, category_product_ids, category_product_names,category_imgpcurl,
+      category_metaTitle,category_metaKeyWords,category_metaDesc)
+    values (#{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{categoryImgurl,jdbcType=VARCHAR}, 
+      #{categoryParentId,jdbcType=INTEGER}, #{categoryParentName,jdbcType=VARCHAR}, #{categoryStatus,jdbcType=INTEGER}, #{categoryLable,jdbcType=INTEGER}, 
+      #{categorySeo,jdbcType=VARCHAR}, #{categorySortOrder,jdbcType=INTEGER}, #{categoryAdminId,jdbcType=INTEGER}, 
+      #{categoryAdminOperatername,jdbcType=VARCHAR}, #{categoryCreatetime,jdbcType=TIMESTAMP}, 
+      #{categoryMotifytime,jdbcType=TIMESTAMP}, #{categoryDesc,jdbcType=VARCHAR}), 
+      #{categoryProductIds,jdbcType=VARCHAR}), #{categoryProductNames,jdbcType=VARCHAR}, #{categoryImgPcurl,jdbcType=VARCHAR},
+      #{categoryMetaTitle,jdbcType=VARCHAR}), #{categoryMetaKeyWords,jdbcType=VARCHAR}, #{categoryMetaDesc,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlbackCategoryExample" resultType="java.lang.Long">
+    select count(*) from tb_mlback_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mlback_category
+    <set>
+      <if test="record.categoryId != null">
+        category_id = #{record.categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.categoryName != null">
+        category_name = #{record.categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryImgurl != null">
+        category_imgurl = #{record.categoryImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryParentId != null">
+        category_parent_id = #{record.categoryParentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.categoryParentName != null">
+        category_parent_name = #{record.categoryParentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryStatus != null">
+        category_status = #{record.categoryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.categoryLable != null">
+        category_lable = #{record.categoryLable,jdbcType=INTEGER},
+      </if>
+      <if test="record.categorySeo != null">
+        category_seo = #{record.categorySeo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categorySortOrder != null">
+        category_sort_order = #{record.categorySortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.categoryAdminId != null">
+        category_admin_id = #{record.categoryAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="record.categoryAdminOperatername != null">
+        category_admin_operaterName = #{record.categoryAdminOperatername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryCreatetime != null">
+        category_createTime = #{record.categoryCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.categoryMotifytime != null">
+        category_motifyTime = #{record.categoryMotifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.categoryDesc != null">
+        category_desc = #{record.categoryDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryProductIds != null">
+        category_product_ids = #{record.categoryProductIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryProductNames != null">
+        category_product_names = #{record.categoryProductNames,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryImgPcurl != null">
+        category_imgpcurl = #{record.categoryImgPcurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryMetaTitle != null">
+        category_metaTitle = #{record.categoryMetaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryMetaKeyWords != null">
+        category_metaKeyWords = #{record.categoryMetaKeyWords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryMetaDesc != null">
+        category_metaDesc = #{record.categoryMetaDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mlback_category
+    set category_id = #{record.categoryId,jdbcType=INTEGER},
+      category_name = #{record.categoryName,jdbcType=VARCHAR},
+      category_imgurl = #{record.categoryImgurl,jdbcType=VARCHAR},
+      category_parent_id = #{record.categoryParentId,jdbcType=INTEGER},
+      category_parent_name = #{record.categoryParentName,jdbcType=VARCHAR},
+      category_status = #{record.categoryStatus,jdbcType=INTEGER},
+      category_lable = #{record.categoryLable,jdbcType=INTEGER},
+      category_seo = #{record.categorySeo,jdbcType=VARCHAR},
+      category_sort_order = #{record.categorySortOrder,jdbcType=INTEGER},
+      category_admin_id = #{record.categoryAdminId,jdbcType=INTEGER},
+      category_admin_operaterName = #{record.categoryAdminOperatername,jdbcType=VARCHAR},
+      category_createTime = #{record.categoryCreatetime,jdbcType=TIMESTAMP},
+      category_motifyTime = #{record.categoryMotifytime,jdbcType=TIMESTAMP},
+      category_desc = #{record.categoryDesc,jdbcType=VARCHAR},
+      category_product_ids = #{record.categoryProductIds,jdbcType=VARCHAR},
+      category_product_names = #{record.categoryProductNames,jdbcType=VARCHAR},
+      category_imgpcurl = #{record.categoryImgPcurl,jdbcType=VARCHAR},
+      category_metaTitle = #{record.categoryMetaTitle,jdbcType=VARCHAR},
+      category_metaKeyWords = #{record.categoryMetaKeyWords,jdbcType=VARCHAR},
+      category_metaDesc = #{record.categoryMetaDesc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlbackCategory">
+    update tb_mlback_category
+    set category_name = #{categoryName,jdbcType=VARCHAR},
+      category_imgurl = #{categoryImgurl,jdbcType=VARCHAR},
+      category_parent_id = #{categoryParentId,jdbcType=INTEGER},
+      category_parent_name = #{categoryParentName,jdbcType=VARCHAR},
+      category_status = #{categoryStatus,jdbcType=INTEGER},
+      category_lable = #{categoryLable,jdbcType=INTEGER},
+      category_seo = #{categorySeo,jdbcType=VARCHAR},
+      category_sort_order = #{categorySortOrder,jdbcType=INTEGER},
+      category_admin_id = #{categoryAdminId,jdbcType=INTEGER},
+      category_admin_operaterName = #{categoryAdminOperatername,jdbcType=VARCHAR},
+      category_createTime = #{categoryCreatetime,jdbcType=TIMESTAMP},
+      category_motifyTime = #{categoryMotifytime,jdbcType=TIMESTAMP},
+      category_desc = #{categoryDesc,jdbcType=VARCHAR},
+      category_product_ids = #{categoryProductIds,jdbcType=VARCHAR},
+      category_product_names = #{categoryProductNames,jdbcType=VARCHAR},
+      category_imgpcurl = #{categoryImgPcurl,jdbcType=VARCHAR},
+      category_metaTitle = #{categoryMetaTitle,jdbcType=VARCHAR},
+      category_metaKeyWords = #{categoryMetaKeyWords,jdbcType=VARCHAR},
+      category_metaDesc = #{categoryMetaDesc,jdbcType=VARCHAR}
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <!-- 使用中 -->
+  <select id="selectMlbackCategory" parameterType="com.atguigu.bean.MlbackCategory" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryImgurl != null">
+        category_imgurl = #{categoryImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryParentId != null">
+        category_parent_id = #{categoryParentId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryParentName != null">
+        category_parent_name = #{categoryParentName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryStatus != null">
+        category_status = #{categoryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="categoryLable != null">
+        category_lable = #{categoryLable,jdbcType=INTEGER},
+      </if>
+      <if test="categorySeo != null">
+        category_seo = #{categorySeo,jdbcType=VARCHAR},
+      </if>
+      <if test="categorySortOrder != null">
+        category_sort_order = #{categorySortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="categoryAdminId != null">
+        category_admin_id = #{categoryAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryAdminOperatername != null">
+        category_admin_operaterName = #{categoryAdminOperatername,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryCreatetime != null">
+        category_createTime = #{categoryCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryMotifytime != null">
+        category_motifyTime = #{categoryMotifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryDesc != null">
+        category_desc = #{categoryDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryProductIds != null">
+        category_product_ids = #{categoryProductIds,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryProductNames != null">
+        category_product_names = #{categoryProductNames,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryImgPcurl != null">
+        category_imgpcurl = #{categoryImgPcurl,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryMetaTitle != null">
+        category_metaTitle = #{categoryMetaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryMetaKeyWords != null">
+        category_metaKeyWords = #{categoryMetaKeyWords,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryMetaDesc != null">
+        category_metaDesc = #{categoryMetaDesc,jdbcType=VARCHAR},
+      </if>
+  </select>
+  <!-- 使用中 -->
+  <select id="selectMlbackCategoryById" parameterType="com.atguigu.bean.MlbackCategory" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </select>
+  <!-- 使用中 -->
+  <select id="selectMlbackCategoryGetAll" parameterType="com.atguigu.bean.MlbackCategory" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_category order by category_id desc
+  </select>
+  <!-- 使用中 -->
+  <select id="selectMlbackCategoryGetAllByParentId" parameterType="com.atguigu.bean.MlbackCategory" resultMap="BaseResultMap">
+    select category_id,category_name,category_seo,category_lable,category_imgurl,category_parent_id,category_desc,category_imgpcurl,
+    category_metaTitle,category_metaKeyWords,category_metaDesc
+    from tb_mlback_category order by category_parent_id,category_id
+  </select>
+  <!-- 使用中 -->
+  <select id="selectMenuMlbackCategoryGetAll" parameterType="com.atguigu.bean.MlbackCategory" resultMap="BaseResultMap">
+    select category_id,category_name,category_lable,category_imgurl,category_parent_id,category_seo,category_desc,category_imgpcurl,category_sort_order,
+    category_metaTitle,category_metaKeyWords,category_metaDesc
+    from tb_mlback_category where category_status = 1 order by category_parent_id,category_sort_order
+  </select>
+  
+  <!-- 使用中 -->
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="categoryId" parameterType="com.atguigu.bean.MlbackCategory">
+    insert into tb_mlback_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="categoryName != null">
+        category_name,
+      </if>
+      <if test="categoryImgurl != null">
+        category_imgurl,
+      </if>
+      <if test="categoryParentId != null">
+        category_parent_id,
+      </if>
+      <if test="categoryParentName != null">
+        category_parent_name,
+      </if>
+      <if test="categoryStatus != null">
+        category_status,
+      </if>
+      <if test="categoryLable != null">
+        category_lable,
+      </if>
+      <if test="categorySeo != null">
+        category_seo,
+      </if>
+      <if test="categorySortOrder != null">
+        category_sort_order,
+      </if>
+      <if test="categoryAdminId != null">
+        category_admin_id,
+      </if>
+      <if test="categoryAdminOperatername != null">
+        category_admin_operaterName,
+      </if>
+      <if test="categoryCreatetime != null">
+        category_createTime,
+      </if>
+      <if test="categoryMotifytime != null">
+        category_motifyTime,
+      </if>
+      <if test="categoryDesc != null">
+        category_desc,
+      </if>
+      <if test="categoryProductIds != null">
+        category_product_ids,
+      </if>
+      <if test="categoryProductNames != null">
+        category_product_names,
+      </if>
+      <if test="categoryImgPcurl != null">
+        category_imgpcurl,
+      </if>
+      <if test="categoryMetaTitle != null">
+        category_metaTitle,
+      </if>
+      <if test="categoryMetaKeyWords != null">
+        category_metaKeyWords,
+      </if>
+      <if test="categoryMetaDesc != null">
+        category_metaDesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryImgurl != null">
+        #{categoryImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryParentId != null">
+        #{categoryParentId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryParentName != null">
+        #{categoryParentName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryStatus != null">
+        #{categoryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="categoryLable != null">
+        #{categoryLable,jdbcType=INTEGER},
+      </if>
+      <if test="categorySeo != null">
+        #{categorySeo,jdbcType=VARCHAR},
+      </if>
+      <if test="categorySortOrder != null">
+        #{categorySortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="categoryAdminId != null">
+        #{categoryAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryAdminOperatername != null">
+        #{categoryAdminOperatername,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryCreatetime != null">
+        #{categoryCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryMotifytime != null">
+        #{categoryMotifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryDesc != null">
+        #{categoryDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryProductIds != null">
+        #{categoryProductIds,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryProductNames != null">
+        #{categoryProductNames,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryImgPcurl != null">
+        #{categoryImgPcurl,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryMetaTitle != null">
+        #{categoryMetaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryMetaKeyWords != null">
+       #{categoryMetaKeyWords,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryMetaDesc != null">
+        #{categoryMetaDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- 使用中 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlbackCategory">
+    update tb_mlback_category
+    <set>
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryImgurl != null">
+        category_imgurl = #{categoryImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryParentId != null">
+        category_parent_id = #{categoryParentId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryParentName != null">
+        category_parent_name = #{categoryParentName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryStatus != null">
+        category_status = #{categoryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="categoryLable != null">
+        category_lable = #{categoryLable,jdbcType=INTEGER},
+      </if>
+      <if test="categorySeo != null">
+        category_seo = #{categorySeo,jdbcType=VARCHAR},
+      </if>
+      <if test="categorySortOrder != null">
+        category_sort_order = #{categorySortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="categoryAdminId != null">
+        category_admin_id = #{categoryAdminId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryAdminOperatername != null">
+        category_admin_operaterName = #{categoryAdminOperatername,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryCreatetime != null">
+        category_createTime = #{categoryCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryMotifytime != null">
+        category_motifyTime = #{categoryMotifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryDesc != null">
+        category_desc = #{categoryDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryProductIds != null">
+        category_product_ids = #{categoryProductIds,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryProductNames != null">
+        category_product_names = #{categoryProductNames,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryImgPcurl != null">
+        category_imgpcurl = #{categoryImgPcurl,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryMetaTitle != null">
+        category_metaTitle = #{categoryMetaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryMetaKeyWords != null">
+        category_metaKeyWords = #{categoryMetaKeyWords,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryMetaDesc != null">
+        category_metaDesc = #{categoryMetaDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+  <!-- 使用中 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_mlback_category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </delete>
+  <!-- 使用中selectMlbackCategoryBySeo -->
+  <select id="selectMlbackCategoryBySeo" parameterType="com.atguigu.bean.MlbackCategory" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_category
+    where category_seo = #{categorySeo,jdbcType=VARCHAR}
+  </select>
+  <!-- 使用中selectCategorylistByParam -->
+  <select id="selectCategorylistByParam" parameterType="com.atguigu.bean.MlbackCategory" resultMap="BaseResultMap">
+  	select category_id, category_name, category_parent_id, category_parent_name, category_status, category_lable, category_seo, category_sort_order,category_metaTitle,category_metaKeyWords,category_metaDesc
+  	from tb_mlback_category where category_status = 1
+    <if test="categoryId != null">
+      and category_id = #{categoryId,jdbcType=INTEGER}
+    </if>
+    <if test="categoryName != null">
+      and category_name = #{categoryName,jdbcType=VARCHAR}
+    </if>
+    <if test="categoryImgurl != null">
+      and category_imgurl = #{categoryImgurl,jdbcType=VARCHAR}
+    </if>
+    <if test="categoryParentId != null">
+      and category_parent_id = #{categoryParentId,jdbcType=INTEGER}
+    </if>
+    <if test="categoryParentName != null">
+      and category_parent_name = #{categoryParentName,jdbcType=VARCHAR}
+    </if>
+    <if test="categoryLable != null">
+      and category_lable = #{categoryLable,jdbcType=INTEGER}
+    </if>
+    <if test="categorySeo != null">
+      and category_seo = #{categorySeo,jdbcType=VARCHAR}
+    </if>
+    <if test="categorySortOrder != null">
+      and category_sort_order = #{categorySortOrder,jdbcType=INTEGER}
+    </if>
+    <if test="categoryDesc != null">
+      and category_desc = #{categoryDesc,jdbcType=VARCHAR}
+    </if>
+    <if test="categoryProductIds != null">
+      and category_product_ids = #{categoryProductIds,jdbcType=VARCHAR}
+    </if>
+    <if test="categoryProductNames != null">
+      and category_product_names = #{categoryProductNames,jdbcType=VARCHAR}
+    </if>
+    <if test="categoryImgPcurl != null">
+      and category_imgpcurl = #{categoryImgPcurl,jdbcType=VARCHAR}
+    </if>
+    order by category_parent_id
+  </select>
+  
+</mapper>

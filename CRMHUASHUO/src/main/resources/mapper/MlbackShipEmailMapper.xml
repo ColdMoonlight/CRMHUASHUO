@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlbackShipEmailMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlbackShipEmail">
+    <id column="shipEmail_id" jdbcType="INTEGER" property="shipemailId" />
+    <result column="shipEmail_name" jdbcType="VARCHAR" property="shipemailName" />
+    <result column="shipEmail_nameth" jdbcType="INTEGER" property="shipemailNameth" />
+    <result column="shipEmail_day" jdbcType="VARCHAR" property="shipemailDay" />
+    <result column="shipEmail_wwwlink" jdbcType="VARCHAR" property="shipemailWwwlink" />
+    <result column="shipEmail_team" jdbcType="VARCHAR" property="shipemailTeam" />
+    <result column="shipEmail_teamEmail" jdbcType="VARCHAR" property="shipemailTeamemail" />
+    <result column="shipEmail_teamWhatsapp" jdbcType="VARCHAR" property="shipemailTeamwhatsapp" />
+    <result column="shipEmail_teamTelphone" jdbcType="VARCHAR" property="shipemailTeamtelphone" />
+    <result column="shipEmail_createTime" jdbcType="VARCHAR" property="shipemailCreatetime" />
+    <result column="shipEmail_motifyTime" jdbcType="VARCHAR" property="shipemailMotifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    shipEmail_id, shipEmail_name, shipEmail_nameth, shipEmail_day, shipEmail_wwwlink, 
+    shipEmail_team, shipEmail_teamEmail, shipEmail_teamWhatsapp, shipEmail_teamTelphone, 
+    shipEmail_createTime, shipEmail_motifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlbackShipEmailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mlback_shipemail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mlback_shipemail
+    where shipEmail_id = #{shipemailId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlbackShipEmailExample">
+    delete from tb_mlback_shipemail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlbackShipEmail">
+    insert into tb_mlback_shipemail (shipEmail_id, shipEmail_name, shipEmail_nameth, 
+      shipEmail_day, shipEmail_wwwlink, shipEmail_team, 
+      shipEmail_teamEmail, shipEmail_teamWhatsapp, 
+      shipEmail_teamTelphone, shipEmail_createTime, 
+      shipEmail_motifyTime)
+    values (#{shipemailId,jdbcType=INTEGER}, #{shipemailName,jdbcType=VARCHAR}, #{shipemailNameth,jdbcType=INTEGER}, 
+      #{shipemailDay,jdbcType=VARCHAR}, #{shipemailWwwlink,jdbcType=VARCHAR}, #{shipemailTeam,jdbcType=VARCHAR}, 
+      #{shipemailTeamemail,jdbcType=VARCHAR}, #{shipemailTeamwhatsapp,jdbcType=VARCHAR}, 
+      #{shipemailTeamtelphone,jdbcType=VARCHAR}, #{shipemailCreatetime,jdbcType=VARCHAR}, 
+      #{shipemailMotifytime,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlbackShipEmailExample" resultType="java.lang.Long">
+    select count(*) from tb_mlback_shipemail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mlback_shipemail
+    <set>
+      <if test="record.shipemailId != null">
+        shipEmail_id = #{record.shipemailId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shipemailName != null">
+        shipEmail_name = #{record.shipemailName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipemailNameth != null">
+        shipEmail_nameth = #{record.shipemailNameth,jdbcType=INTEGER},
+      </if>
+      <if test="record.shipemailDay != null">
+        shipEmail_day = #{record.shipemailDay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipemailWwwlink != null">
+        shipEmail_wwwlink = #{record.shipemailWwwlink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipemailTeam != null">
+        shipEmail_team = #{record.shipemailTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipemailTeamemail != null">
+        shipEmail_teamEmail = #{record.shipemailTeamemail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipemailTeamwhatsapp != null">
+        shipEmail_teamWhatsapp = #{record.shipemailTeamwhatsapp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipemailTeamtelphone != null">
+        shipEmail_teamTelphone = #{record.shipemailTeamtelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipemailCreatetime != null">
+        shipEmail_createTime = #{record.shipemailCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipemailMotifytime != null">
+        shipEmail_motifyTime = #{record.shipemailMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mlback_shipemail
+    set shipEmail_id = #{record.shipemailId,jdbcType=INTEGER},
+      shipEmail_name = #{record.shipemailName,jdbcType=VARCHAR},
+      shipEmail_nameth = #{record.shipemailNameth,jdbcType=INTEGER},
+      shipEmail_day = #{record.shipemailDay,jdbcType=VARCHAR},
+      shipEmail_wwwlink = #{record.shipemailWwwlink,jdbcType=VARCHAR},
+      shipEmail_team = #{record.shipemailTeam,jdbcType=VARCHAR},
+      shipEmail_teamEmail = #{record.shipemailTeamemail,jdbcType=VARCHAR},
+      shipEmail_teamWhatsapp = #{record.shipemailTeamwhatsapp,jdbcType=VARCHAR},
+      shipEmail_teamTelphone = #{record.shipemailTeamtelphone,jdbcType=VARCHAR},
+      shipEmail_createTime = #{record.shipemailCreatetime,jdbcType=VARCHAR},
+      shipEmail_motifyTime = #{record.shipemailMotifytime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlbackShipEmail">
+    update tb_mlback_shipemail
+    set shipEmail_name = #{shipemailName,jdbcType=VARCHAR},
+      shipEmail_nameth = #{shipemailNameth,jdbcType=INTEGER},
+      shipEmail_day = #{shipemailDay,jdbcType=VARCHAR},
+      shipEmail_wwwlink = #{shipemailWwwlink,jdbcType=VARCHAR},
+      shipEmail_team = #{shipemailTeam,jdbcType=VARCHAR},
+      shipEmail_teamEmail = #{shipemailTeamemail,jdbcType=VARCHAR},
+      shipEmail_teamWhatsapp = #{shipemailTeamwhatsapp,jdbcType=VARCHAR},
+      shipEmail_teamTelphone = #{shipemailTeamtelphone,jdbcType=VARCHAR},
+      shipEmail_createTime = #{shipemailCreatetime,jdbcType=VARCHAR},
+      shipEmail_motifyTime = #{shipemailMotifytime,jdbcType=VARCHAR}
+    where shipEmail_id = #{shipemailId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <!-- insert -->
+  <insert id="insertSelective" parameterType="com.atguigu.bean.MlbackShipEmail">
+    insert into tb_mlback_shipemail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shipemailId != null">
+        shipEmail_id,
+      </if>
+      <if test="shipemailName != null">
+        shipEmail_name,
+      </if>
+      <if test="shipemailNameth != null">
+        shipEmail_nameth,
+      </if>
+      <if test="shipemailDay != null">
+        shipEmail_day,
+      </if>
+      <if test="shipemailWwwlink != null">
+        shipEmail_wwwlink,
+      </if>
+      <if test="shipemailTeam != null">
+        shipEmail_team,
+      </if>
+      <if test="shipemailTeamemail != null">
+        shipEmail_teamEmail,
+      </if>
+      <if test="shipemailTeamwhatsapp != null">
+        shipEmail_teamWhatsapp,
+      </if>
+      <if test="shipemailTeamtelphone != null">
+        shipEmail_teamTelphone,
+      </if>
+      <if test="shipemailCreatetime != null">
+        shipEmail_createTime,
+      </if>
+      <if test="shipemailMotifytime != null">
+        shipEmail_motifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shipemailId != null">
+        #{shipemailId,jdbcType=INTEGER},
+      </if>
+      <if test="shipemailName != null">
+        #{shipemailName,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailNameth != null">
+        #{shipemailNameth,jdbcType=INTEGER},
+      </if>
+      <if test="shipemailDay != null">
+        #{shipemailDay,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailWwwlink != null">
+        #{shipemailWwwlink,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailTeam != null">
+        #{shipemailTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailTeamemail != null">
+        #{shipemailTeamemail,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailTeamwhatsapp != null">
+        #{shipemailTeamwhatsapp,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailTeamtelphone != null">
+        #{shipemailTeamtelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailCreatetime != null">
+        #{shipemailCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailMotifytime != null">
+        #{shipemailMotifytime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- delete -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_mlback_shipemail
+    where shipEmail_id = #{shipemailId,jdbcType=INTEGER}
+  </delete>
+
+  <!-- update -->  
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlbackShipEmail">
+    update tb_mlback_shipemail
+    <set>
+      <if test="shipemailName != null">
+        shipEmail_name = #{shipemailName,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailNameth != null">
+        shipEmail_nameth = #{shipemailNameth,jdbcType=INTEGER},
+      </if>
+      <if test="shipemailDay != null">
+        shipEmail_day = #{shipemailDay,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailWwwlink != null">
+        shipEmail_wwwlink = #{shipemailWwwlink,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailTeam != null">
+        shipEmail_team = #{shipemailTeam,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailTeamemail != null">
+        shipEmail_teamEmail = #{shipemailTeamemail,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailTeamwhatsapp != null">
+        shipEmail_teamWhatsapp = #{shipemailTeamwhatsapp,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailTeamtelphone != null">
+        shipEmail_teamTelphone = #{shipemailTeamtelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailCreatetime != null">
+        shipEmail_createTime = #{shipemailCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="shipemailMotifytime != null">
+        shipEmail_motifyTime = #{shipemailMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shipEmail_id = #{shipemailId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- selectMlbackShowAreaById -->
+  <select id="selectMlbackShipEmailById" parameterType="com.atguigu.bean.MlbackShipEmail" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_shipemail 
+    where shipEmail_id = #{shipemailId,jdbcType=INTEGER}
+  </select>
+  <!-- selectAll使用中 -->
+  <select id="selectMlbackShipEmailGetAll" parameterType="com.atguigu.bean.MlbackShipEmail" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_shipemail order by shipEmail_id desc
+  </select>
+  <!-- selectMlbackShipEmailByshipemailNameth使用中 -->
+  <select id="selectMlbackShipEmailByshipemailNameth" parameterType="com.atguigu.bean.MlbackShipEmail" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_shipemail 
+    where shipEmail_nameth = #{shipemailNameth,jdbcType=INTEGER}
+  </select>
+  
+</mapper>

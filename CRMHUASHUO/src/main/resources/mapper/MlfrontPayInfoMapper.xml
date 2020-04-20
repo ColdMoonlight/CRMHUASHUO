@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlfrontPayInfoMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlfrontPayInfo">
+    <id column="payInfo_id" jdbcType="INTEGER" property="payinfoId" />
+    <result column="payInfo_uid" jdbcType="INTEGER" property="payinfoUid" />
+    <result column="payInfo_ip" jdbcType="VARCHAR" property="payinfoIp" />
+    <result column="payInfo_oid" jdbcType="INTEGER" property="payinfoOid" />
+    <result column="payInfo_platform" jdbcType="VARCHAR" property="payinfoPlatform" />
+    <result column="payInfo_platformSerialCode" jdbcType="VARCHAR" property="payinfoPlatformserialcode" />
+    <result column="payInfo_money" jdbcType="DECIMAL" property="payinfoMoney" />
+    <result column="payInfo_status" jdbcType="INTEGER" property="payinfoStatus" />
+    <result column="payInfo_reason" jdbcType="VARCHAR" property="payinfoReason" />
+    <result column="payInfo_createTime" jdbcType="VARCHAR" property="payinfoCreatetime" />
+    <result column="payInfo_motifyTime" jdbcType="VARCHAR" property="payinfoMotifytime" />
+    <result column="payInfo_plateNum" jdbcType="VARCHAR" property="payinfoPlateNum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    payInfo_id, payInfo_uid, payInfo_ip, payInfo_oid, payInfo_platform, payInfo_platformSerialCode, 
+    payInfo_money, payInfo_status, payInfo_reason, payInfo_createTime, payInfo_motifyTime, payInfo_plateNum
+  </sql>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlfrontPayInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mlfront_payinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mlfront_payinfo
+    where payInfo_id = #{payinfoId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlfrontPayInfoExample">
+    delete from tb_mlfront_payinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlfrontPayInfo">
+    insert into tb_mlfront_payinfo (payInfo_id, payInfo_uid, payInfo_ip, 
+      payInfo_oid, payInfo_platform, payInfo_platformSerialCode, 
+      payInfo_money, payInfo_status, payInfo_reason, 
+      payInfo_createTime, payInfo_motifyTime, payInfo_plateNum)
+    values (#{payinfoId,jdbcType=INTEGER}, #{payinfoUid,jdbcType=INTEGER}, #{payinfoIp,jdbcType=VARCHAR}, 
+      #{payinfoOid,jdbcType=INTEGER}, #{payinfoPlatform,jdbcType=VARCHAR}, #{payinfoPlatformserialcode,jdbcType=VARCHAR}, 
+      #{payinfoMoney,jdbcType=DECIMAL}, #{payinfoStatus,jdbcType=INTEGER}, #{payinfoReason,jdbcType=VARCHAR}, 
+      #{payinfoCreatetime,jdbcType=VARCHAR}, #{payinfoMotifytime,jdbcType=VARCHAR}, #{payinfoPlateNum,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlfrontPayInfoExample" resultType="java.lang.Long">
+    select count(*) from tb_mlfront_payinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mlfront_payinfo
+    <set>
+      <if test="record.payinfoId != null">
+        payInfo_id = #{record.payinfoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payinfoUid != null">
+        payInfo_uid = #{record.payinfoUid,jdbcType=INTEGER},
+      </if>
+      <if test="record.payinfoIp != null">
+        payInfo_ip = #{record.payinfoIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payinfoOid != null">
+        payInfo_oid = #{record.payinfoOid,jdbcType=INTEGER},
+      </if>
+      <if test="record.payinfoPlatform != null">
+        payInfo_platform = #{record.payinfoPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payinfoPlatformserialcode != null">
+        payInfo_platformSerialCode = #{record.payinfoPlatformserialcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payinfoMoney != null">
+        payInfo_money = #{record.payinfoMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payinfoStatus != null">
+        payInfo_status = #{record.payinfoStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.payinfoReason != null">
+        payInfo_reason = #{record.payinfoReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payinfoCreatetime != null">
+        payInfo_createTime = #{record.payinfoCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payinfoMotifytime != null">
+        payInfo_motifyTime = #{record.payinfoMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payinfoPlateNum != null">
+        payInfo_plateNum = #{record.payinfoPlateNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mlfront_payinfo
+    set payInfo_id = #{record.payinfoId,jdbcType=INTEGER},
+      payInfo_uid = #{record.payinfoUid,jdbcType=INTEGER},
+      payInfo_ip = #{record.payinfoIp,jdbcType=VARCHAR},
+      payInfo_oid = #{record.payinfoOid,jdbcType=INTEGER},
+      payInfo_platform = #{record.payinfoPlatform,jdbcType=VARCHAR},
+      payInfo_platformSerialCode = #{record.payinfoPlatformserialcode,jdbcType=VARCHAR},
+      payInfo_money = #{record.payinfoMoney,jdbcType=DECIMAL},
+      payInfo_status = #{record.payinfoStatus,jdbcType=INTEGER},
+      payInfo_reason = #{record.payinfoReason,jdbcType=VARCHAR},
+      payInfo_createTime = #{record.payinfoCreatetime,jdbcType=VARCHAR},
+      payInfo_motifyTime = #{record.payinfoMotifytime,jdbcType=VARCHAR},
+      payInfo_plateNum = #{record.payinfoPlateNum,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlfrontPayInfo">
+    update tb_mlfront_payinfo
+    set payInfo_uid = #{payinfoUid,jdbcType=INTEGER},
+      payInfo_ip = #{payinfoIp,jdbcType=VARCHAR},
+      payInfo_oid = #{payinfoOid,jdbcType=INTEGER},
+      payInfo_platform = #{payinfoPlatform,jdbcType=VARCHAR},
+      payInfo_platformSerialCode = #{payinfoPlatformserialcode,jdbcType=VARCHAR},
+      payInfo_money = #{payinfoMoney,jdbcType=DECIMAL},
+      payInfo_status = #{payinfoStatus,jdbcType=INTEGER},
+      payInfo_reason = #{payinfoReason,jdbcType=VARCHAR},
+      payInfo_createTime = #{payinfoCreatetime,jdbcType=VARCHAR},
+      payInfo_motifyTime = #{payinfoMotifytime,jdbcType=VARCHAR},
+      payInfo_plateNum = #{payinfoPlateNum,jdbcType=VARCHAR}
+    where payInfo_id = #{payinfoId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- insert -->
+  <insert id="insertSelective" parameterType="com.atguigu.bean.MlfrontPayInfo">
+    insert into tb_mlfront_payinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="payinfoId != null">
+        payInfo_id,
+      </if>
+      <if test="payinfoUid != null">
+        payInfo_uid,
+      </if>
+      <if test="payinfoIp != null">
+        payInfo_ip,
+      </if>
+      <if test="payinfoOid != null">
+        payInfo_oid,
+      </if>
+      <if test="payinfoPlatform != null">
+        payInfo_platform,
+      </if>
+      <if test="payinfoPlatformserialcode != null">
+        payInfo_platformSerialCode,
+      </if>
+      <if test="payinfoMoney != null">
+        payInfo_money,
+      </if>
+      <if test="payinfoStatus != null">
+        payInfo_status,
+      </if>
+      <if test="payinfoReason != null">
+        payInfo_reason,
+      </if>
+      <if test="payinfoCreatetime != null">
+        payInfo_createTime,
+      </if>
+      <if test="payinfoMotifytime != null">
+        payInfo_motifyTime,
+      </if>
+      <if test="payinfoPlateNum != null">
+        payInfo_plateNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="payinfoId != null">
+        #{payinfoId,jdbcType=INTEGER},
+      </if>
+      <if test="payinfoUid != null">
+        #{payinfoUid,jdbcType=INTEGER},
+      </if>
+      <if test="payinfoIp != null">
+        #{payinfoIp,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoOid != null">
+        #{payinfoOid,jdbcType=INTEGER},
+      </if>
+      <if test="payinfoPlatform != null">
+        #{payinfoPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoPlatformserialcode != null">
+        #{payinfoPlatformserialcode,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoMoney != null">
+        #{payinfoMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="payinfoStatus != null">
+        #{payinfoStatus,jdbcType=INTEGER},
+      </if>
+      <if test="payinfoReason != null">
+        #{payinfoReason,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoCreatetime != null">
+        #{payinfoCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoMotifytime != null">
+        #{payinfoMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoPlateNum != null">
+        #{payinfoPlateNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- delete -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_mlfront_payinfo
+    where payInfo_id = #{payinfoId,jdbcType=INTEGER}
+  </delete>
+  <!-- update -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlfrontPayInfo">
+    update tb_mlfront_payinfo
+    <set>
+      <if test="payinfoUid != null">
+        payInfo_uid = #{payinfoUid,jdbcType=INTEGER},
+      </if>
+      <if test="payinfoIp != null">
+        payInfo_ip = #{payinfoIp,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoOid != null">
+        payInfo_oid = #{payinfoOid,jdbcType=INTEGER},
+      </if>
+      <if test="payinfoPlatform != null">
+        payInfo_platform = #{payinfoPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoPlatformserialcode != null">
+        payInfo_platformSerialCode = #{payinfoPlatformserialcode,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoMoney != null">
+        payInfo_money = #{payinfoMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="payinfoStatus != null">
+        payInfo_status = #{payinfoStatus,jdbcType=INTEGER},
+      </if>
+      <if test="payinfoReason != null">
+        payInfo_reason = #{payinfoReason,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoCreatetime != null">
+        payInfo_createTime = #{payinfoCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoMotifytime != null">
+        payInfo_motifyTime = #{payinfoMotifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="payinfoPlateNum != null">
+        payInfo_plateNum = #{payinfoPlateNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where payInfo_id = #{payinfoId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- selectOneBy使用中selectMlfrontPayInfoById -->
+  <select id="selectMlfrontPayInfoById" parameterType="com.atguigu.bean.MlfrontPayInfo" resultMap="BaseResultMap">
+    select *
+    from tb_mlfront_payinfo 
+    where payInfo_id = #{payinfoId,jdbcType=INTEGER}
+  </select>
+  <!-- selectAll使用中 -->
+  <select id="selectMlfrontPayInfoGetAll" parameterType="com.atguigu.bean.MlfrontPayInfo" resultMap="BaseResultMap">
+    select *
+    from tb_mlfront_payinfo order by payInfo_id desc
+  </select>
+  
+  <!-- selectMlfrontPayInfoByDate使用中 -->
+  <select id="selectMlfrontPayInfoByDate" parameterType="com.atguigu.bean.MlfrontPayInfo" resultMap="BaseResultMap">
+    select *
+    from tb_mlfront_payinfo  where payInfo_createTime between #{payinfoCreatetime,jdbcType=VARCHAR} and  #{payinfoMotifytime,jdbcType=VARCHAR} order by payInfo_id desc
+  </select>
+  
+   <!-- selectHighPayInfoListBySearch使用中 -->
+  <select id="selectHighPayInfoListBySearch" parameterType="com.atguigu.bean.MlfrontPayInfo" resultMap="BaseResultMap">
+    select * from tb_mlfront_payinfo where
+     payInfo_createTime between #{payinfoCreatetime,jdbcType=VARCHAR} and #{payinfoMotifytime,jdbcType=VARCHAR} 
+    <if test="payinfoStatus != null">
+      and payInfo_status = #{payinfoStatus,jdbcType=INTEGER}
+    </if>
+    <if test="payinfoPlateNum != null">
+      and payInfo_plateNum = #{payinfoPlateNum,jdbcType=VARCHAR}
+    </if>
+    order by payInfo_id desc
+  </select>
+  
+  <!-- selectMlfrontPayInfoByMotifyTime使用中 //0未支付//1支付成功//2审单完毕//3发货完毕 //4已退款//5发送弃购//6重复单关闭 -->
+  <select id="selectMlfrontPayInfoByMotifyTime" parameterType="com.atguigu.bean.MlfrontPayInfo" resultMap="BaseResultMap">
+    select * from tb_mlfront_payinfo where
+     payInfo_createTime between #{payinfoCreatetime,jdbcType=VARCHAR} and #{payinfoMotifytime,jdbcType=VARCHAR} 
+     and (payInfo_status = 1 or  payInfo_status = 2 or payInfo_status = 3)
+    order by payInfo_id desc
+  </select>
+</mapper>

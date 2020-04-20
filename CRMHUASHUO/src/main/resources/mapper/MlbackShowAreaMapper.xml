@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.MlbackShowAreaMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.bean.MlbackShowArea">
+    <id column="showArea_id" jdbcType="INTEGER" property="showareaId" />
+    <result column="showArea_name" jdbcType="VARCHAR" property="showareaName" />
+    <result column="showArea_imgurl" jdbcType="VARCHAR" property="showareaImgurl" />
+    <result column="showArea_imgpcurl" jdbcType="VARCHAR" property="showareaImgpcurl" />
+    <result column="showArea_status" jdbcType="INTEGER" property="showareaStatus" />
+    <result column="showArea_numth" jdbcType="INTEGER" property="showareaNumth" />
+    <result column="showArea_createTime" jdbcType="VARCHAR" property="showareaCreatetime" />
+    <result column="showArea_motifyTime" jdbcType="VARCHAR" property="showareaMotifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    showArea_id, showArea_name, showArea_imgurl, showArea_imgpcurl, showArea_status, 
+    showArea_numth, showArea_createTime, showArea_motifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.atguigu.bean.MlbackShowAreaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_mlback_showarea
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_mlback_showarea
+    where showArea_id = #{showareaId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByExample" parameterType="com.atguigu.bean.MlbackShowAreaExample">
+    delete from tb_mlback_showarea
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.bean.MlbackShowArea">
+    insert into tb_mlback_showarea (showArea_id, showArea_name, showArea_imgurl, 
+      showArea_imgpcurl, showArea_status, showArea_numth, 
+      showArea_createTime, showArea_motifyTime)
+    values (#{showareaId,jdbcType=INTEGER}, #{showareaName,jdbcType=VARCHAR}, #{showareaImgurl,jdbcType=VARCHAR}, 
+      #{showareaImgpcurl,jdbcType=VARCHAR}, #{showareaStatus,jdbcType=INTEGER}, #{showareaNumth,jdbcType=INTEGER}, 
+      #{showareaCreatetime,jdbcType=VARCHAR}, #{showareaMotifytime,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="countByExample" parameterType="com.atguigu.bean.MlbackShowAreaExample" resultType="java.lang.Long">
+    select count(*) from tb_mlback_showarea
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_mlback_showarea
+    <set>
+      <if test="record.showareaId != null">
+        showArea_id = #{record.showareaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.showareaName != null">
+        showArea_name = #{record.showareaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showareaImgurl != null">
+        showArea_imgurl = #{record.showareaImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showareaImgpcurl != null">
+        showArea_imgpcurl = #{record.showareaImgpcurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showareaStatus != null">
+        showArea_status = #{record.showareaStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.showareaNumth != null">
+        showArea_numth = #{record.showareaNumth,jdbcType=INTEGER},
+      </if>
+      <if test="record.showareaCreatetime != null">
+        showArea_createTime = #{record.showareaCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showareaMotifytime != null">
+        showArea_motifyTime = #{record.showareaMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_mlback_showarea
+    set showArea_id = #{record.showareaId,jdbcType=INTEGER},
+      showArea_name = #{record.showareaName,jdbcType=VARCHAR},
+      showArea_imgurl = #{record.showareaImgurl,jdbcType=VARCHAR},
+      showArea_imgpcurl = #{record.showareaImgpcurl,jdbcType=VARCHAR},
+      showArea_status = #{record.showareaStatus,jdbcType=INTEGER},
+      showArea_numth = #{record.showareaNumth,jdbcType=INTEGER},
+      showArea_createTime = #{record.showareaCreatetime,jdbcType=VARCHAR},
+      showArea_motifyTime = #{record.showareaMotifytime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.bean.MlbackShowArea">
+    update tb_mlback_showarea
+    set showArea_name = #{showareaName,jdbcType=VARCHAR},
+      showArea_imgurl = #{showareaImgurl,jdbcType=VARCHAR},
+      showArea_imgpcurl = #{showareaImgpcurl,jdbcType=VARCHAR},
+      showArea_status = #{showareaStatus,jdbcType=INTEGER},
+      showArea_numth = #{showareaNumth,jdbcType=INTEGER},
+      showArea_createTime = #{showareaCreatetime,jdbcType=VARCHAR},
+      showArea_motifyTime = #{showareaMotifytime,jdbcType=VARCHAR}
+    where showArea_id = #{showareaId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <!-- insert -->
+  <insert id="insertSelective" parameterType="com.atguigu.bean.MlbackShowArea">
+    insert into tb_mlback_showarea
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="showareaId != null">
+        showArea_id,
+      </if>
+      <if test="showareaName != null">
+        showArea_name,
+      </if>
+      <if test="showareaImgurl != null">
+        showArea_imgurl,
+      </if>
+      <if test="showareaImgpcurl != null">
+        showArea_imgpcurl,
+      </if>
+      <if test="showareaStatus != null">
+        showArea_status,
+      </if>
+      <if test="showareaNumth != null">
+        showArea_numth,
+      </if>
+      <if test="showareaCreatetime != null">
+        showArea_createTime,
+      </if>
+      <if test="showareaMotifytime != null">
+        showArea_motifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="showareaId != null">
+        #{showareaId,jdbcType=INTEGER},
+      </if>
+      <if test="showareaName != null">
+        #{showareaName,jdbcType=VARCHAR},
+      </if>
+      <if test="showareaImgurl != null">
+        #{showareaImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="showareaImgpcurl != null">
+        #{showareaImgpcurl,jdbcType=VARCHAR},
+      </if>
+      <if test="showareaStatus != null">
+        #{showareaStatus,jdbcType=INTEGER},
+      </if>
+      <if test="showareaNumth != null">
+        #{showareaNumth,jdbcType=INTEGER},
+      </if>
+      <if test="showareaCreatetime != null">
+        #{showareaCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="showareaMotifytime != null">
+        #{showareaMotifytime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- delete -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_mlback_showarea
+    where showArea_id = #{showareaId,jdbcType=INTEGER}
+  </delete>
+  <!-- update -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.bean.MlbackShowArea">
+    update tb_mlback_showarea
+    <set>
+      <if test="showareaName != null">
+        showArea_name = #{showareaName,jdbcType=VARCHAR},
+      </if>
+      <if test="showareaImgurl != null">
+        showArea_imgurl = #{showareaImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="showareaImgpcurl != null">
+        showArea_imgpcurl = #{showareaImgpcurl,jdbcType=VARCHAR},
+      </if>
+      <if test="showareaStatus != null">
+        showArea_status = #{showareaStatus,jdbcType=INTEGER},
+      </if>
+      <if test="showareaNumth != null">
+        showArea_numth = #{showareaNumth,jdbcType=INTEGER},
+      </if>
+      <if test="showareaCreatetime != null">
+        showArea_createTime = #{showareaCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="showareaMotifytime != null">
+        showArea_motifyTime = #{showareaMotifytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where showArea_id = #{showareaId,jdbcType=INTEGER}
+  </update>
+  <!-- selectMlbackShowAreaById -->
+  <select id="selectMlbackShowAreaById" parameterType="com.atguigu.bean.MlbackShowArea" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_showarea 
+    where showArea_id = #{showareaId,jdbcType=INTEGER}
+  </select>
+  <select id="selectMlbackShowAreaByNumthAndStatus" parameterType="com.atguigu.bean.MlbackShowArea" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_showarea 
+    where showArea_numth = #{showareaNumth,jdbcType=INTEGER} and showArea_status = #{showareaStatus,jdbcType=INTEGER}
+  </select>
+  <!-- selectAll使用中 -->
+  <select id="selectMlbackShowAreaGetAll" parameterType="com.atguigu.bean.MlbackShowArea" resultMap="BaseResultMap">
+    select *
+    from tb_mlback_showarea order by showArea_id desc
+  </select>
+</mapper>

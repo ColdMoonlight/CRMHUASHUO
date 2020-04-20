@@ -7,9 +7,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HUASHUOIMG</title>
+  <title>分类管理</title>
 
-  <!-- Bootstrap -->
+ <%--  <!-- Bootstrap -->
   <link href="${APP_PATH }/static/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
   <link href="${APP_PATH }/static/css/font-awesome.min.css" rel="stylesheet">
@@ -17,6 +17,9 @@
   <link href="${APP_PATH }/static/css/nprogress.css" rel="stylesheet">
   <!-- Toastr -->
   <link href="${APP_PATH }/static/css/toastr.min.css" rel="stylesheet">
+  <!-- Select2 Style -->
+  <link href="${APP_PATH }/static/css/select2.min.css" rel="stylesheet"> --%>
+  <link href="${APP_PATH }/static/css/lib.min.css" rel="stylesheet">
   <!-- Custom Theme Style -->
   <link href="${APP_PATH }/static/css/custom.css" rel="stylesheet">
 </head>
@@ -34,7 +37,7 @@
                 <li>
                   <a><i class="glyphicon glyphicon-picture"></i> 图片管理 <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="${APP_PATH }/index/tobackIndexPage">图片分类</a></li>
+                    <li><a href="${APP_PATH }/Index/tobackIndexPage">图片分类</a></li>
                     <li><a href="${APP_PATH }/ImgCategory/toImgCategoryPage">图片列表</a></li>
                   </ul>
                 </li>
@@ -112,7 +115,7 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-2" for="imgCategoryParentId">归属分类</label>
-                    <select class="form-control col-sm-10" name="imgCategoryParentId" id="selectCategory">
+                    <select class="form-control col-sm-10 select-category" style="width: 300px;" name="imgCategoryParentId" id="selectCategory">
                       <option value="--none--">--none--</option>
                     </select>
                   </div>
@@ -139,13 +142,18 @@
     </div>
 
     <!-- jQuery -->
-    <script src="${APP_PATH }/static/js/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="${APP_PATH }/static/js/bootstrap.bundle.min.js"></script>
-    <!-- NProgress -->
-    <script src="${APP_PATH }/static/js/nprogress.js"></script>
-    <!-- Toastr -->
-    <script src="${APP_PATH }/static/js/toastr.min.js"></script>
+	<script src="${APP_PATH }/static/js/jquery.min.js"></script>
+	<%-- <!-- Bootstrap -->
+	<script src="${APP_PATH }/static/js/bootstrap.min.js"></script>
+	<!-- NProgress -->
+	<script src="${APP_PATH }/static/js/nprogress.js"></script>
+	<!-- Toastr -->
+	<script src="${APP_PATH }/static/js/toastr.min.js"></script>
+	<!-- PhotoScript Scripts -->
+	<script src="${APP_PATH }/static/js/jquery.magnific-popup.min.js"></script>
+	<!-- Select2 Scripts -->
+	<script src="${APP_PATH }/static/js/select2.min.js"></script> --%>
+	<script src="${APP_PATH }/static/js/jquery.lib.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="${APP_PATH }/static/js/custom.js"></script>
     <script>
@@ -185,16 +193,45 @@
       // 渲染分类select
       function renderCategory(data) {
         var htmlStr = '',
-          len = data ? data.length : 0;
+          len = data ? data.length : 0,
+          defaultValue = parseInt(getStorageCategory());
         if (len > 0) {
-          htmlStr += '<option value="-1">--none--</option>';
+          htmlStr += '<option value="-1" '+ (defaultValue == -1 ? "selected" : "" ) +'>--none--</option>';
           for (var i = 0; i < len; i++) {
-            htmlStr += '<option value="' + data[i].imgCategoryId + '">' + data[i].imgCategoryName + '</option>';
+            htmlStr += '<option value="' + data[i].imgCategoryId + '" '+ (defaultValue == data[i].imgCategoryId ? "selected" : "" ) +'>' + data[i].imgCategoryName + '</option>';
           }
         }
 
         $('#selectCategory').html(htmlStr);
+        // search category
+        $('#selectCategory').select2({
+            language: 'zh-CN',
+            matcher: matchStart,
+            width: 'resolve'
+        });
       }
+
+      function matchStart(params, data) {
+        if ($.trim(params.term) === '') {
+          return data;
+        }
+
+        var filteredData = [];
+        if (data.text.indexOf(params.term) == 0) {
+          filteredData.push(data);
+        }
+
+        if (filteredData.length) {
+          var modifiedData = $.extend({}, data, true);
+          modifiedData.children = filteredData;
+
+          return modifiedData;
+        }
+
+        // Return `null` if the term should not be displayed
+        return null;
+      }
+
       // 填充分类数据
       function addCategoryData(data) {
         $('input[name="imgCategoryId"]').val(data.imgCategoryId);

@@ -1403,11 +1403,9 @@ button,
 .btn-group-vertical .btn, .btn-group .btn {
   margin-bottom: 0;
   margin-right: 0; }
-
 .main-box {
 	position: relative;
 }
-
 .page-title {
 	align-items: center;
 }
@@ -1431,7 +1429,7 @@ button,
 	transform: transalte(-50%, -50%);
 }
 .input-file-list {
-	display: inline-block;
+	margin-left: -16px;
 }
 .input-file-item {
 	position: relative;
@@ -1446,10 +1444,10 @@ button,
 	border: 1px solid #ccc;
 }
 .input-file-item .picture-delete,
-#js-gallery .slide .picture-delete {
+#js-gallery .slide .picture-delete,
+#js-gallery .slide .picture-download {
     display: none;
 	position: absolute;
-	top: -20px;
 	right: -20px;
 	width: 40px;
 	height: 40px;
@@ -1458,6 +1456,30 @@ button,
 	color: #fff;
 	cursor: pointer;
 }
+.input-file-item .picture-delete,
+#js-gallery .slide .picture-delete {
+	top: -20px;	
+}
+#js-gallery .slide .picture-download {
+	bottom: -20px;
+}
+#js-gallery .slide .picture-download>i {
+	margin-top: 5px;
+    margin-left: 5px;
+}
+.download-btn {
+	display: inline-block;
+	position: fixed;
+	/* top: -100px;
+	left: -100px; */
+	width: 20px;
+	height: 20px;
+}
+.download-btn>img {
+	display: block;
+	width: 20px;
+	height: 20px;
+}
 #js-gallery .slide .picture-delete>span,
 .input-file-item .picture-delete>span{
 	position: absolute;
@@ -1465,12 +1487,14 @@ button,
 	left: 10px;
 }
 .input-file-item:hover .picture-delete,
-#js-gallery .slide:hover .picture-delete {
+#js-gallery .slide:hover .picture-delete,
+#js-gallery .slide:hover .picture-download {
 	display: inline-block;
 }
 .input-file {
-	display: inline-block;
 	position: relative;
+	display: inline-block;
+	margin-left: -16px;
 }
 .input-file>.input-file-plus {
 	position: relative;
@@ -1501,12 +1525,24 @@ button,
 	position: absolute;
 	top: 0;
 	left: 20%;
+	z-index: 1;
 	margin-left: -14px;
 	display: inline-block;
 	width: 100px;
 	height: 100px;
 	color: transparent;
 	opacity: 0;
+}
+.upload-progress {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	display: none;
+	width: 100px;
+	height: 100px;
+	text-align: center;
+	line-height: 100px;
 }
 
 .gallery-box {
@@ -1531,4 +1567,10 @@ button,
 #js-gallery .slide>img {
 	width: 100%;
 	height: auto;
+}
+
+@media (min-width: 576px) {
+	#add-modal .modal-dialog {
+	    max-width: 600px;
+	}
 }

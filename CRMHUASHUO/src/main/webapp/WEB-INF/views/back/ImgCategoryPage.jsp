@@ -60,16 +60,19 @@
 
         <div class="main-box">
           <div class="page-title row">
-            <div class="title_left col-md-4 col-sm-4">
+            <div class="title_left col-md-3 col-sm-3">
               <h4>图片列表</h4>
             </div>
-            <div class="title_middle col-md-4 col-sm-4">
-              <button id="btn-add" class="btn btn-primary" type="button" data-toggle="modal"
-                data-target="#add-modal">添加图片</button>
+            <div class="title_middle col-md-3 col-sm-3">
+              <button id="btn-add" class="btn btn-primary" type="button" data-toggle="modal" data-target="#add-modal">添加图片</button>
             </div>
+            <div class="custom-control custom-checkbox col-md-3 col-sm-3">
+			  <input type="checkbox" class="custom-control-input" id="custom-filename">
+			  <label class="custom-control-label" for="custom-filename">是否定义下载文件名</label>
+			</div>
 
-            <div class="title_right col-md-4 col-sm-4">
-              <select class="form-control col-sm-10 select-category" name="imgDetailCategoryId" id="selectCategory2">
+            <div class="title_right col-md-3 col-sm-3">
+              <select class="form-control col-sm-10 select-category" name="imgDetailCategoryId"  id="selectCategory2">
                 <option value="-1">--none--</option>
               </select>
             </div>
@@ -90,7 +93,7 @@
       <!-- add-picture modal -->
       <div class="modal fade" id="add-modal" data-backdrop="static" tabindex="-1" role="dialog"
         aria-labelledby="add-picture-modal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">添加图片</h5>
@@ -132,7 +135,51 @@
       </div>
     </div>
   </div>
-
+  <!-- download modal -->
+  <div class="modal fade" id="fixDownloadFilename" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">修改下载文件</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="form-group row">
+			    <label for="downloadFiname" class="col-sm-2 col-form-label">文件名</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="downloadFilename" placeholder="请输入文件名。。。">
+			    </div>
+			  </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+	        <button type="button" class="btn btn-primary" id="continueDownload">继续下载</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- delete modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">删除图片</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p class="text-center">你确定要删除图片吗？</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+	        <button type="button" class="btn btn-primary" id="confirmDelete">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
   <!-- jQuery -->
   <script src="${APP_PATH }/static/js/jquery.min.js"></script>
   <%-- <!-- Bootstrap -->
@@ -187,7 +234,13 @@
           $(item).on('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            deletePicture(this);
+            var self = this;
+            $('#deleteModal').modal('show');
+            $('#confirmDelete').off('click');
+            $('#confirmDelete').on('click', function() {
+            	isModalDelete = true;
+            	deletePicture(self);
+            });
             /* var timer = setInterval(function() {
               if (isDelSuccess) {
                 isDelSuccess = false;
@@ -202,7 +255,23 @@
           $(item).on('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            downloadPicture(this);
+            var filename = '',
+            	self = this;
+            isInputFilename = $('#custom-filename').prop('checked');
+            if (isInputFilename) {
+            	$('#fixDownloadFilename').modal('show');
+            	function downloadFn() {
+	           		downloadPicture($(self).parent().data('url'), $('#downloadFilename').val().trim() || 'download');
+	           	}
+
+            	$('#continueDownload').off('click');
+	           	$('#continueDownload').on('click', downloadFn);
+            } else {
+            	filename = 'download'
+            	downloadPicture($(self).parent().data('url'), 'download');
+            }
+
+       		$('#downloadFilename').val('');
           });
         });
       } else {
@@ -384,6 +453,7 @@
             toastr.success('删除图片成功');
             $(self).parent().remove();
             fileList.splice(parseInt($(self).data('index')), 1);
+            if (isModalDelete) $('#deleteModal').modal('hide');
           } else {
             toastr.error('删除图片失败，请重试！');
           }
@@ -391,14 +461,16 @@
         error: function (err) {
           console.log(err);
           toastr.error('删除图片失败，请重试！');
+        },
+        complete: function() {
+        	isModalDelete = false;
         }
       });
     }
     // 下载图片
-    function downloadPicture(self) {
+    function downloadPicture(url, filename) {
       showLoading();
-      var $downLoad = $('.download-btn'),
-        url = $(self).parent().data('url');
+      var $downLoad = $('.download-btn');
       if ($downLoad.length <= 0) {
         $downLoad = $('<a class="download-btn" download="download"></a>');
         $(document.body).append($downLoad);
@@ -410,8 +482,12 @@
         }
       }).then(function (blob) {
         $downLoad.attr('href', URL.createObjectURL(blob));
+        $downLoad.attr('download', filename);
         $downLoad[0].click();
         toastr.success('下载图片成功！');
+        if (isInputFilename) {
+        	$('#fixDownloadFilename').modal('hide');
+        }
       }).catch(function (error) {
         toastr.error('下载图片失败！');
         console.log(error);
@@ -422,7 +498,9 @@
 
     var categoryData = null,
       fileList = [],
-      isDelSuccess = false;
+      isDelSuccess = false,
+      isInputFilename = false,
+      isModalDelete = false;
     // default
     showLoading();
     renderCategoryData();

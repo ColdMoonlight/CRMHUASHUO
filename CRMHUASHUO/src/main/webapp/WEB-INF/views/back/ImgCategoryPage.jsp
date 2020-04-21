@@ -66,10 +66,10 @@
             <div class="title_middle col-md-3 col-sm-3">
               <button id="btn-add" class="btn btn-primary" type="button" data-toggle="modal" data-target="#add-modal">添加图片</button>
             </div>
-            <div class="custom-control custom-checkbox col-md-3 col-sm-3">
+            <!-- <div class="custom-control custom-checkbox col-md-3 col-sm-3">
 			  <input type="checkbox" class="custom-control-input" id="custom-filename">
 			  <label class="custom-control-label" for="custom-filename">是否定义下载文件名</label>
-			</div>
+			</div> -->
 
             <div class="title_right col-md-3 col-sm-3">
               <select class="form-control col-sm-10 select-category" name="imgDetailCategoryId"  id="selectCategory2">

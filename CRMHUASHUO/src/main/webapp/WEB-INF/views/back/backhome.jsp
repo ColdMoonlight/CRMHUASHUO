@@ -167,7 +167,7 @@
             '<td>' + data[i].imgCategoryDesc + '</td>' +
             '<td>' +
             '<button id="btn-edit" data-id="' + data[i].imgCategoryId + '" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">编辑</button>' +
-            '<button id="btn-delete" data-id="' + data[i].imgCategoryId + '" class="btn btn-danger">删除</button>' +
+            '<button id="btn-delete" data-id="' + data[i].imgCategoryId + '" class="btn btn-danger" disabled>删除</button>' +
             '</td>' +
             '</tr>';
         }

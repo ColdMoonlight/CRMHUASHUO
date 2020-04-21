@@ -96,7 +96,7 @@
         <!-- add-picture modal -->
         <div class="modal fade" id="add-modal" data-backdrop="static" tabindex="-1" role="dialog"
           aria-labelledby="add-picture-modal" aria-hidden="true">
-          <div class="modal-dialog" role="document">
+          <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">添加分类</h5>
@@ -140,7 +140,26 @@
         </div>
       </div>
     </div>
-
+	<!-- delete modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">删除分类</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p class="text-center">你确定要删除分类吗？</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+	        <button type="button" class="btn btn-primary" id="confirmDelete">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     <!-- jQuery -->
 	<script src="${APP_PATH }/static/js/jquery.min.js"></script>
 	<%-- <!-- Bootstrap -->
@@ -266,27 +285,41 @@
           }
         });
       }
-      var categoryData = null;
+      var categoryData = null,
+      	isModalDelete = false;
       // default
       showLoading();
       jumpPage(getStoragePage());
       // delte category
       $(document.body).on('click', '#btn-delete', function (e) {
-        $.ajax({
-          url: "${APP_PATH }/ImgCategory/delete",
-          data: JSON.stringify({ "imgCategoryId": $(this).data('id') }),
-          type: "post",
-          dataType: "json",
-          contentType: 'application/json',
-          success: function (data) {
-            if (data.code == 100) {
-              toastr.success('删除分类成功');
-              jumpPage(getStoragePage());
-            } else {
-              toastr.error('删除分类失败');
-            }
-          }
-        });
+    	  var self = this;
+    	  $('#deleteModal').modal('show');
+    	  $('#confirmDelete').off('click');
+    	  $('#confirmDelete').on('click', function() {
+    		isModalDelete = true;
+	        $.ajax({
+	          url: "${APP_PATH }/ImgCategory/delete",
+	          data: JSON.stringify({ "imgCategoryId": $(self).data('id') }),
+	          type: "post",
+	          dataType: "json",
+	          contentType: 'application/json',
+	          success: function (data) {
+	            if (data.code == 100) {
+	              toastr.success('删除分类成功');
+	              jumpPage(getStoragePage());
+	              $('#deleteModal').modal('hide');
+	            } else {
+	              toastr.error('删除分类失败');
+	            }
+	          },
+	          error: function(err) {
+	        	  console.log(err);
+	          },
+	          complete: function() {
+	        	  isModalDelete = false;
+	          }
+	        });
+    	  });
       });
       // event change category
       $(document.body).on('change', '#selectCategory', function (val) {

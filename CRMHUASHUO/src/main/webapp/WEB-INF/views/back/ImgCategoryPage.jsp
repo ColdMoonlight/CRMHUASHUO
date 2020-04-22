@@ -382,7 +382,7 @@
         deletePicture(this);
         isDelSuccess = false;
       });
-      $('.input-file-list').append(itemEl);
+      $('.input-file-list').prepend(itemEl);
     }
 
     // 获取归属分类数据

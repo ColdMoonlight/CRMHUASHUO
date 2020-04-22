@@ -90,54 +90,55 @@
         </div>
       </div>
       <!-- /page content -->
-      <!-- add-picture modal -->
-      <div class="modal fade" id="add-modal" data-backdrop="static" tabindex="-1" role="dialog"
-        aria-labelledby="add-picture-modal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">添加图片</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+    </div>
+  </div>
+  
+  <!-- add-picture modal -->
+  <div class="modal fade" id="add-modal" data-backdrop="static" role="dialog"
+    aria-labelledby="add-picture-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">添加图片</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="formData">
+            <div class="form-group row">
+              <label class="col-sm-2" for="imgDetailCategoryId">归属分类</label>
+              <select class="form-control col-sm-10 select-category" style="width: 300px;" name="imgDetailCategoryId"
+                id="selectCategory"></select>
             </div>
-            <div class="modal-body">
-              <form id="formData">
-                <div class="form-group row">
-                  <label class="col-sm-2" for="imgDetailCategoryId">归属分类</label>
-                  <select class="form-control col-sm-10 select-category" style="width: 300px;" name="imgDetailCategoryId"
-                    id="selectCategory"></select>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-2" for="imgDetailUrl">上传图片</label>
-                  <div class="col-sm-10">
-                    <div class="input-file">
-                      <div class="input-file-plus col-ofset-2"></div>
-                      <input type="file" class="form-control" name="imgDetailUrl" id="imgDetailUrl" placeholder="请上传图片"
-                        required></input>
-                      <div class="upload-progress">
-                        <div class="load-img spinner-border" role="status">
-                          <span class="sr-only">Loading...</span>
-                        </div>
-                      </div>
+            <div class="form-group row">
+              <label class="col-sm-2" for="imgDetailUrl">上传图片</label>
+              <div class="col-sm-10">
+                <div class="input-file">
+                  <div class="input-file-plus col-ofset-2"></div>
+                  <input type="file" class="form-control" name="imgDetailUrl" id="imgDetailUrl" placeholder="请上传图片"
+                    required></input>
+                  <div class="upload-progress">
+                    <div class="load-img spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
                     </div>
-                    <div class="input-file-list"></div>
                   </div>
                 </div>
-              </form>
+                <div class="input-file-list"></div>
+              </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-              <button type="button" id="btn-save" class="btn btn-primary">保存</button>
-            </div>
-          </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <button type="button" id="btn-save" class="btn btn-primary">保存</button>
         </div>
       </div>
     </div>
   </div>
   <!-- download modal -->
   <div class="modal fade" id="fixDownloadFilename" tabindex="-1" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title">修改下载文件</h5>
@@ -162,7 +163,7 @@
 	</div>
 	<!-- delete modal -->
 	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title">删除图片</h5>
@@ -381,7 +382,7 @@
         deletePicture(this);
         isDelSuccess = false;
       });
-      $('.input-file-list').append(itemEl);
+      $('.input-file-list').prepend(itemEl);
     }
 
     // 获取归属分类数据

@@ -93,56 +93,56 @@
           </div>
         </div>
         <!-- /page content -->
-        <!-- add-picture modal -->
-        <div class="modal fade" id="add-modal" data-backdrop="static" tabindex="-1" role="dialog"
-          aria-labelledby="add-picture-modal" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">添加分类</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+      </div>
+    </div>
+    <!-- add-category modal -->
+    <div class="modal fade" id="add-modal" data-backdrop="static" role="dialog"
+      aria-labelledby="add-picture-modal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">添加分类</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="formData">
+              <input hidden name="imgCategoryId" value="-1">
+              <input hidden name="imgCategoryParentName" value="--none--">
+              <div class="form-group row">
+                <label class="col-sm-2" for="imgCategoryName">分类名</label>
+                <input type="text" class="form-control col-sm-10" name="imgCategoryName" id="imgCategoryName"
+                  placeholder="请输入分类名" required></input>
               </div>
-              <div class="modal-body">
-                <form id="formData">
-                  <input hidden name="imgCategoryId" value="-1">
-                  <input hidden name="imgCategoryParentName" value="--none--">
-                  <div class="form-group row">
-                    <label class="col-sm-2" for="imgCategoryName">分类名</label>
-                    <input type="text" class="form-control col-sm-10" name="imgCategoryName" id="imgCategoryName"
-                      placeholder="请输入分类名" required></input>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-2" for="imgCategoryParentId">归属分类</label>
-                    <select class="form-control col-sm-10 select-category" style="width: 300px;" name="imgCategoryParentId" id="selectCategory">
-                      <option value="--none--">--none--</option>
-                    </select>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-2" for="imgCategorySeo">分类SEO</label>
-                    <input type="text" class="form-control col-sm-10" name="imgCategorySeo" id="imgCategorySeo"
-                      placeholder="请输入分类seo" required></input>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-2" for="imgCategoryDesc">分类描述</label>
-                    <input type="text" class="form-control col-sm-10" name="imgCategoryDesc" id="imgCategoryDesc"
-                      placeholder="请输入分类描述" disabled value="--none--"></input>
-                  </div>
-                </form>
+              <div class="form-group row">
+                <label class="col-sm-2" for="imgCategoryParentId">归属分类</label>
+                <select class="form-control col-sm-10 select-category" style="width: 300px;" name="imgCategoryParentId" id="selectCategory">
+                  <option value="--none--">--none--</option>
+                </select>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" id="btn-save" class="btn btn-primary">保存</button>
+              <div class="form-group row">
+                <label class="col-sm-2" for="imgCategorySeo">分类SEO</label>
+                <input type="text" class="form-control col-sm-10" name="imgCategorySeo" id="imgCategorySeo"
+                  placeholder="请输入分类seo" required></input>
               </div>
-            </div>
+              <div class="form-group row">
+                <label class="col-sm-2" for="imgCategoryDesc">分类描述</label>
+                <input type="text" class="form-control col-sm-10" name="imgCategoryDesc" id="imgCategoryDesc"
+                  placeholder="请输入分类描述" disabled value="--none--"></input>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            <button type="button" id="btn-save" class="btn btn-primary">保存</button>
           </div>
         </div>
       </div>
     </div>
 	<!-- delete modal -->
 	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title">删除分类</h5>
@@ -232,6 +232,7 @@
 
       function matchStart(params, data) {
         if ($.trim(params.term) === '') {
+        	console.log(1)
           return data;
         }
 

@@ -181,6 +181,26 @@
 	    </div>
 	  </div>
 	</div>
+	<!-- compress modal -->
+	<div class="modal fade" id="compressModal" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">压缩上传图片</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p class="text-center">图片大小超过10MB，是否允许系统压缩上传图片？</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+	        <button type="button" class="btn btn-primary" id="confirmCompress">允许</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
   <!-- jQuery -->
   <script src="${APP_PATH }/static/js/jquery.min.js"></script>
   <%-- <!-- Bootstrap -->
@@ -431,11 +451,31 @@
     function uploadRule(file) {
       // 上传小于2Mb
       if (file.size > 1024 * 1024 * 10) {
-        toastr.error('上传图片大小超过10Mb，请选择合适的图片上传！');
-        $('.upload-progress').hide();
+        // toastr.error('上传图片大小超过10Mb，请选择合适的图片上传！');
+        uploadProgress(true);
+        $('#compressModal').modal('show');
+        $('#confirmCompress').off('click');
+        $('#confirmCompress').on('click', function() {
+        	uploadProgress(false);
+        	$('#compressModal').modal('hide');
+        	toastr.success('图片正在压缩上传过程中');
+        	resetImgMeasure(file);
+        });
         return false;
       }
       return true;
+    }
+    // init 图片尺寸
+    function resetImgMeasure(file) {
+    	var reader = new FileReader();
+    	reader.readAsDataURL(file);
+    	reader.onload = function(e) {
+    		var img = new Image();
+    		img.src = e.target.result;
+    		img.onload = function(e) {
+    	        compressImg(img, this.width, this.height);
+    		};
+    	};
     }
     // 删除图片
     function deletePicture(self) {
@@ -467,6 +507,30 @@
         	isModalDelete = false;
         }
       });
+    }
+    // compress picture
+    function compressImg(img, imgWidth, imgHeight) {
+    	var canvas = document.createElement('canvas'),
+    		ctx = canvas.getContext('2d');
+    	var windowWidth = window.innerWidth,
+    		windowHeight = window.innerHeight;
+    	var imgRatio = imgWidth / imgHeight,
+    		widowRatio = windowWidth / windowHeight;
+    	if (imgRatio < widowRatio) {
+    		imgHeight = windowHeight;
+    		imgWidth = parseInt(imgHeight * imgRatio);
+    	} else {
+    		imgWidth = windowWidth;
+    		imgHeight = (imgWidth / imgRatio);
+    	}
+    	canvas.width = imgWidth;
+    	canvas.height = imgHeight;
+    	ctx.clearRect(0, 0, imgWidth, imgHeight);
+    	ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
+    	canvas.toBlob(function (blob) {
+    		uploadPicture(blob);
+        }, 'image/jpeg');
+    	
     }
     // 下载图片
     function downloadPicture(url, filename) {

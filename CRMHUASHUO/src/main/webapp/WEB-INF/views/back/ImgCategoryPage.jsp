@@ -450,9 +450,9 @@
     // 上传 rule
     function uploadRule(file) {
       // 上传小于2Mb
-      if (file.size > 1024 * 1024 * 10) {
-        // toastr.error('上传图片大小超过10Mb，请选择合适的图片上传！');
+      if (file.size > 10 * 1024 * 1024 || isAutoOrientation) {
         uploadProgress(true);
+    	isAutoOrientation && toastr.warning('您所使用的浏览器会自动倒置图片，所以图片将压缩上传！');
         $('#compressModal').modal('show');
         $('#confirmCompress').off('click');
         $('#confirmCompress').on('click', function() {
@@ -468,14 +468,84 @@
     // init 图片尺寸
     function resetImgMeasure(file) {
     	var reader = new FileReader();
-    	reader.readAsDataURL(file);
+    	reader.readAsArrayBuffer(file);
     	reader.onload = function(e) {
-    		var img = new Image();
-    		img.src = e.target.result;
+    		var img = new Image(),
+    			result = e.target.result,
+    			orientation = getPictureOrientation(result);
+    		img.src = 'data:' + file.type + ';base64,' + arrayBufferToBase64(result);
     		img.onload = function(e) {
-    	        compressImg(img, this.width, this.height);
+        		img.style.imageOrientation = 'none';
+    	        compressImg(img, this.width, this.height, orientation);
     		};
     	};
+    }
+    // test img-auto orientation for browsers
+    function testSupportImageAutoOrientation() {
+    	var testImageURL =
+   	      'data:image/jpeg;base64,/9j/4QAiRXhpZgAATU0AKgAAAAgAAQESAAMAAAABAAYAAAA' +
+   	      'AAAD/2wCEAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBA' +
+   	      'QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQE' +
+   	      'BAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAf/AABEIAAEAAgMBEQACEQEDEQH/x' +
+   	      'ABKAAEAAAAAAAAAAAAAAAAAAAALEAEAAAAAAAAAAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAA' +
+   	      'AAAAAEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA/8H//2Q=='
+   	    var img = document.createElement('img')
+   	    img.src = testImageURL;
+   	    img.onload = function () {
+   	      isAutoOrientation = img.width == 1 && img.height == 2;
+   	    }
+    }
+    // arrayBuffer to base64
+    function arrayBufferToBase64(arrayBuffer) {
+    	var bytes = new Uint8Array(arrayBuffer),
+    		binary = '';
+    	for (var i = 0, len = bytes.length; i < len; i += 1) {
+    		binary += String.fromCharCode(bytes[i]);
+    	}
+    	return btoa(binary);
+    }
+    // base64 to arryayBuffer
+    function base64toArrayBuffer(base64) {
+    	var reg = /data:(image\/.+);base64,/,
+    		mimeString = '',
+    		raw,
+        	arrayBuffer,
+        	len = 0;
+
+        raw = base64.replace(reg, '');
+        raw = atob(raw);
+        len = raw.length;
+        arrayBuffer = new Uint8Array(len);
+
+        for (var i = 0 ; i < len; i += 1) {
+            arrayBuffer[i] = raw.charCodeAt(i);
+        }
+
+        return arrayBuffer;
+    }
+    // 判断图片方向
+    function getPictureOrientation(result) {
+    	var view = new DataView(result);
+        if (view.getUint16(0, false) != 0xFFD8) return -2;
+        var length = view.byteLength,
+        	offset = 2;
+        while (offset < length) {
+            if (view.getUint16(offset+2, false) <= 8) return -1;
+            var marker = view.getUint16(offset, false);
+            offset += 2;
+            if (marker == 0xFFE1) {
+                if (view.getUint32(offset += 2, false) != 0x45786966) return -1;
+                var little = view.getUint16(offset += 6, false) == 0x4949;
+                offset += view.getUint32(offset + 4, little);
+                var tags = view.getUint16(offset, little);
+                offset += 2;
+                for (var i = 0; i < tags; i++)
+                    if (view.getUint16(offset + (i * 12), little) == 0x0112)
+                    	return view.getUint16(offset + (i * 12) + 8, little);
+            } else if ((marker & 0xFF00) != 0xFF00) break;
+            else
+            	offset += view.getUint16(offset, false);
+        }
     }
     // 删除图片
     function deletePicture(self) {
@@ -509,7 +579,7 @@
       });
     }
     // compress picture
-    function compressImg(img, imgWidth, imgHeight) {
+    function compressImg(img, imgWidth, imgHeight, orientation) {
     	var canvas = document.createElement('canvas'),
     		ctx = canvas.getContext('2d');
     	var windowWidth = window.innerWidth,
@@ -523,14 +593,76 @@
     		imgWidth = windowWidth;
     		imgHeight = (imgWidth / imgRatio);
     	}
-    	canvas.width = imgWidth;
-    	canvas.height = imgHeight;
-    	ctx.clearRect(0, 0, imgWidth, imgHeight);
-    	ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
-    	canvas.toBlob(function (blob) {
+    	if(isAutoOrientation) {
+    		canvas.width = imgWidth;
+          	canvas.height = imgHeight;
+    		ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
+    	} else {    		
+	    	switch (orientation) {
+		        case 5:
+		        case 6:
+		        case 7:
+		        case 8:
+		        	canvas.width = imgHeight;
+		        	canvas.height = imgWidth;
+		          	break;
+		        default:
+		         	canvas.width = imgWidth;
+		          	canvas.height = imgHeight;
+		    }
+	    	switch (orientation) {
+	    		// 后置
+		    	case 3:
+		    		ctx.rotate(180 * Math.PI / 180);
+		    		ctx.drawImage(img, -imgWidth, -imgHeight, imgWidth, imgHeight);
+		    		break;
+		    	case 6:
+		    		ctx.rotate(90 * Math.PI / 180);
+		    		ctx.drawImage(img, 0, -imgWidth, imgHeight, imgWidth);
+		    		break;
+		    	case 8:
+		    		ctx.rotate(270 * Math.PI / 180);
+		    		ctx.drawImage(img, -imgHeight, 0, imgHeight, imgWidth);
+		    		break;
+		    	// 前置
+		    	case 2:
+		    		ctx.translate(imgWidth, 0);
+		            ctx.scale(-1, 1);
+		            ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
+		    		break;
+		    	case 4:
+		    		ctx.translate(imgWidth, 0);
+		            ctx.scale(-1, 1);
+		            ctx.rotate(180 * Math.PI / 180);
+		            ctx.drawImage(img, -imgWidth, -imgHeight, imgWidth, imgHeight);
+		    		break;
+		    	case 5:
+		    		ctx.translate(imgWidth, 0);
+		            ctx.scale(-1, 1);
+		            ctx.rotate(90 * Math.PI / 180);
+		            ctx.drawImage(img, 0, -imgWidth, imgHeight, imgWidth);
+		    		break;
+		    	case 7:
+		    		ctx.translate(imgWidth, 0);
+		            ctx.scale(-1, 1);
+		            ctx.rotate(270 * Math.PI / 180);
+		            ctx.drawImage(img, -imgHeight, 0, imgHeight, imgWidth);
+		    		break;
+		    	default:
+		    		ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
+	    	}
+    	}
+    	var mimeType = 'image/jpeg';
+    	if ('toBlob' in canvas) {
+    		canvas.toBlob(function (blob) {
+    			uploadPicture(blob);
+            }, mimeType);
+    	} else if ('toDataURL' in canvas) {
+    		var blob = new Blob([base64toArrayBuffer(canvas.toDataURL(mimeType))], { type: mimeType })
     		uploadPicture(blob);
-        }, 'image/jpeg');
-    	
+    	} else {
+    		toastr('您当前版本浏览器不支持压缩上传图片，请下载最新版本的浏览器！');
+    	}    	
     }
     // 下载图片
     function downloadPicture(url, filename) {
@@ -565,7 +697,8 @@
       fileList = [],
       isDelSuccess = false,
       isInputFilename = false,
-      isModalDelete = false;
+      isModalDelete = false,
+      isAutoOrientation = false;
     // default
     showLoading();
     renderCategoryData();
@@ -594,12 +727,12 @@
     });
     // upload picture
     $(document.body).on('change', '.input-file>input', function (e) {
-      var file = $('input[name="imgDetailUrl"]')[0].files[0];
-      $('input[name="imgDetailUrl"]').val('');
+      var file = e.target.files[0];
       // enable status
       uploadProgress(false);
       // check picture is fit to rule
-      uploadRule(file) && uploadPicture(file);
+      file && uploadRule(file) && uploadPicture(file);
+      $('input[name="imgDetailUrl"]').val('');
     });
     // save picture
     $(document.body).on('click', '#btn-save', function (e) {
@@ -607,6 +740,8 @@
       $('#add-modal').modal('hide');
       window.location.href = window.location.href;
     });
+    // excute testAutoOrientation
+    testSupportImageAutoOrientation();
   </script>
 </body>
 
